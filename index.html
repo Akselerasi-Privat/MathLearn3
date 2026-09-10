@@ -34,26 +34,15 @@
     <style>
         aside { transition: transform 0.3s ease-in-out, width 0.3s ease-in-out; }
         main { transition: margin-left 0.3s ease-in-out; }
-        
         aside.tertutup { transform: translateX(-100%); }
         main.lebar { margin-left: 0 !important; }
-
         .halaman, .sub-konten, .tab-admin, .tab-toolkit { display: none; opacity: 0; transform: scale(0.98) translateY(10px); transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .halaman.aktif, .sub-konten.aktif, .tab-admin.aktif, .tab-toolkit.aktif { display: block; opacity: 1; transform: scale(1) translateY(0); }
         
-        @keyframes floatMath1 {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        @keyframes floatMath2 {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(15px) rotate(-8deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
+        @keyframes floatMath1 { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes floatMath2 { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(15px) rotate(-8deg); } 100% { transform: translateY(0px) rotate(0deg); } }
         .math-symbol-1 { animation: floatMath1 6s ease-in-out infinite; }
         .math-symbol-2 { animation: floatMath2 8s ease-in-out infinite; }
-
         .card-hover-effect { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .card-hover-effect:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
         .card-hover-effect:active { transform: scale(0.97); }
@@ -70,27 +59,22 @@
         
         math-field { font-size: 1.5rem; border-radius: 0.5rem; padding: 0.5rem; background: #f8fafc; border: 2px solid #e2e8f0; }
         math-field:focus-within { border-color: #6366f1; outline: none; }
-
         .modal-scrollable { overflow-y: auto; max-height: 100vh; padding: 2rem 1rem; }
+        
         @media (max-width: 1024px) { #area-cetak-sertifikat { transform: scale(0.85); transform-origin: top center; margin-bottom: -10%; } }
         @media (max-width: 768px) { #area-cetak-sertifikat { transform: scale(0.55); transform-origin: top center; margin-bottom: -40%; } }
 
         @media print {
             body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             body:not(.mode-cetak-sertifikat) { background: white !important; }
-            body:not(.mode-cetak-sertifikat) aside, 
-            body:not(.mode-cetak-sertifikat) header, 
-            body:not(.mode-cetak-sertifikat) .btn-print-hide, 
-            body:not(.mode-cetak-sertifikat) #modal-login, 
-            body:not(.mode-cetak-sertifikat) #custom-alert, 
-            body:not(.mode-cetak-sertifikat) #modal-rumus,
+            body:not(.mode-cetak-sertifikat) aside, body:not(.mode-cetak-sertifikat) header, body:not(.mode-cetak-sertifikat) .btn-print-hide, 
+            body:not(.mode-cetak-sertifikat) #modal-login, body:not(.mode-cetak-sertifikat) #custom-alert, body:not(.mode-cetak-sertifikat) #modal-rumus,
             body:not(.mode-cetak-sertifikat) #modal-konfirmasi { display: none !important; }
             body:not(.mode-cetak-sertifikat) main { margin-left: 0 !important; padding: 0 !important; width: 100% !important; }
             body:not(.mode-cetak-sertifikat) .card-box { box-shadow: none !important; border: none !important; }
 
             body.mode-cetak-sertifikat * { visibility: hidden; }
-            body.mode-cetak-sertifikat #modal-sertifikat, 
-            body.mode-cetak-sertifikat #modal-sertifikat * { visibility: visible; }
+            body.mode-cetak-sertifikat #modal-sertifikat, body.mode-cetak-sertifikat #modal-sertifikat * { visibility: visible; }
             body.mode-cetak-sertifikat #modal-sertifikat { position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; padding: 0; margin: 0; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; }
             body.mode-cetak-sertifikat #area-cetak-sertifikat { width: 297mm !important; height: 209mm !important; transform: scale(1) !important; margin: 0 !important; padding: 40px !important; box-shadow: none !important; border-width: 12px !important; display: flex; flex-direction: column; justify-content: center; }
             body.mode-cetak-sertifikat .btn-print-hide { display: none !important; }
@@ -98,6 +82,16 @@
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 flex min-h-screen overflow-x-hidden" onclick="playClickSoundGlobal(event)">
+
+    <!-- GLOBAL LOADER -->
+    <div id="global-loader" class="fixed inset-0 bg-slate-900 z-[100] flex flex-col items-center justify-center text-white transition-opacity duration-500">
+        <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center text-white text-5xl shadow-2xl mb-6 animate-pulse">
+            <i class="fas fa-bolt"></i>
+        </div>
+        <i class="fas fa-spinner fa-spin text-3xl mb-4 text-blue-400"></i>
+        <h2 class="font-black text-2xl tracking-wide">Menghubungkan ke Server...</h2>
+        <p class="text-slate-400 text-sm mt-2">Mengunduh materi dan pengaturan terbaru</p>
+    </div>
 
     <!-- MODAL SERTIFIKAT DINAMIS -->
     <div id="modal-sertifikat" class="fixed inset-0 bg-slate-900/90 z-[70] hidden modal-scrollable flex-col items-center transition-opacity duration-300">
@@ -175,7 +169,7 @@
     </div>
 
     <!-- MODAL LOGIN -->
-    <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300">
+    <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 hidden">
         <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-md w-full transform scale-100 animate-[fadeIn_0.3s]">
             <div class="text-center mb-6">
                 <div id="logo-preview-box" class="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center text-white text-3xl mx-auto mb-3 shadow-lg overflow-hidden border-2 border-white">
@@ -604,10 +598,10 @@
                             <button onclick="formatTeks('jawaban-lkpd-siswa', 'insertUnorderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ul"></i></button>
                             <button onclick="formatTeks('jawaban-lkpd-siswa', 'insertOrderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ol"></i></button>
                             <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                            <button onclick="bukaModalRumus('jawaban-lkpd-siswa')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2"><i class="fas fa-square-root-alt"></i> Rumus</button>
+                            <button onclick="bukaModalRumus('jawaban-lkpd-siswa')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-square-root-alt"></i> Rumus</button>
                             <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                            <input type="file" id="upload-word-siswa" accept=".docx" class="hidden" onchange="prosesUploadWordSiswa(event)">
-                            <button onclick="document.getElementById('upload-word-siswa').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2"><i class="fas fa-file-word"></i> Import Word</button>
+                            <input type="file" id="upload-word-siswa" accept=".docx" class="hidden" onchange="prosesUploadWordGlobal(event, 'jawaban-lkpd-siswa')">
+                            <button onclick="document.getElementById('upload-word-siswa').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-file-word"></i> Import Word</button>
                         </div>
                         <div id="jawaban-lkpd-siswa" oninput="simpanOtomatisLKPD()" contenteditable="true" class="editor-word w-full min-h-[200px] border-2 border-t-0 border-slate-200 rounded-b-xl p-4 bg-white focus:outline-none focus:border-blue-500 text-slate-700 text-lg" placeholder="Tuliskan jawaban Anda secara langsung di sini..."></div>
                         <button id="btn-submit-lkpd" onclick="submitLKPDSiswa(event)" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold transition shadow-lg hover:bg-green-700 mt-4 inline-block"><i class="fas fa-paper-plane"></i> Kirim Jawaban Akhir</button>
@@ -647,24 +641,22 @@
                     </div>
 
                     <div class="p-8">
-                        
                         <!-- BAGIAN KHUSUS ADMIN (Teknis & Data) -->
                         <div id="area-khusus-admin" class="hidden">
                             <div class="bg-slate-100 border-2 border-slate-200 rounded-2xl p-6 mb-8">
                                 <h3 class="text-lg font-black text-slate-800 mb-2"><i class="fas fa-image text-indigo-600"></i> Pengaturan Logo Lembaga / Les Privat</h3>
-                                <p class="text-xs text-slate-500 mb-4">Unggah logo resmi Akselerasi Privat (PNG/JPG) agar tampil di seluruh sidebar aplikasi.</p>
+                                <p class="text-xs text-slate-500 mb-4">Unggah logo resmi Akselerasi Privat (PNG/JPG) agar tampil di seluruh sidebar aplikasi (Tersimpan ke Server).</p>
                                 <div class="flex items-center gap-4">
                                     <input type="file" id="input-logo-lembaga" accept="image/*" class="text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
-                                    <button onclick="simpanLogoLembaga()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold shadow hover:bg-indigo-700 transition text-sm">Simpan Logo</button>
-                                    <button onclick="resetLogoLembaga()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl font-bold hover:bg-slate-300 transition text-sm">Reset Default</button>
+                                    <button onclick="simpanLogoLembaga()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold shadow hover:bg-indigo-700 transition text-sm">Simpan Logo ke Server</button>
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                 <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-8 text-center flex flex-col justify-between space-y-6">
                                     <div>
-                                        <h3 class="text-xl font-black text-red-800 mb-2"><i class="fas fa-database"></i> Backup & Restore Data</h3>
-                                        <button onclick="eksporDatabase()" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold shadow hover:bg-red-500 transition mb-3">Download File Backup</button>
+                                        <h3 class="text-xl font-black text-red-800 mb-2"><i class="fas fa-database"></i> Backup & Restore Data Lokal</h3>
+                                        <button onclick="eksporDatabase()" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold shadow hover:bg-red-500 transition mb-3">Download Data Lokal</button>
                                         <input type="file" id="file-impor" accept=".json" class="hidden" onchange="prosesImporDatabase(event)">
                                         <button onclick="document.getElementById('file-impor').click()" class="w-full bg-white border-2 border-red-600 text-red-600 py-3 rounded-xl font-bold hover:bg-red-100 transition">Restore Data</button>
                                     </div>
@@ -682,7 +674,7 @@
                         <!-- BAGIAN KHUSUS GURU (Konten) -->
                         <div id="area-khusus-guru">
                             <div class="mb-6">
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Pilih Bab / Modul yang ingin diatur:</label>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Pilih Bab / Modul yang ingin diatur (Otomatis dari Server):</label>
                                 <select id="pilih-materi-admin" onchange="muatDataKeEditorAdmin()" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 bg-slate-50 font-bold focus:outline-none focus:border-indigo-500 text-slate-700">
                                     <option value="">-- Pilih Modul / Bab --</option>
                                 </select>
@@ -695,7 +687,7 @@
                                 <button onclick="bukaTabAdmin('tab-admin-lkpd', this)" class="tab-btn-admin flex-1 py-3 px-2 font-semibold text-slate-500 hover:text-indigo-600 transition text-xs sm:text-sm">3. LKPD</button>
                                 <button onclick="bukaTabAdmin('tab-admin-quiz', this)" class="tab-btn-admin flex-1 py-3 px-2 font-semibold text-slate-500 hover:text-indigo-600 transition text-xs sm:text-sm">4. Quiz (PG)</button>
                                 <button onclick="bukaTabAdmin('tab-admin-eval', this)" class="tab-btn-admin flex-1 py-3 px-2 font-semibold text-slate-500 hover:text-indigo-600 transition text-xs sm:text-sm">5. Evaluasi</button>
-                                <button onclick="bukaTabAdmin('tab-admin-cek-lkpd', this)" class="tab-btn-admin flex-1 py-3 px-2 font-semibold text-amber-600 hover:text-amber-700 transition text-xs sm:text-sm"><i class="fas fa-folder-open"></i> Cek LKPD Siswa</button>
+                                <button onclick="bukaTabAdmin('tab-admin-cek-lkpd', this)" class="tab-btn-admin flex-1 py-3 px-2 font-semibold text-amber-600 hover:text-amber-700 transition text-xs sm:text-sm"><i class="fas fa-cloud-download-alt"></i> Cek Jawaban LKPD</button>
                             </div>
 
                             <!-- TAB 1: ATP -->
@@ -718,13 +710,13 @@
                                     <button onclick="formatTeks('editor-atp', 'insertUnorderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ul"></i></button>
                                     <button onclick="formatTeks('editor-atp', 'insertOrderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ol"></i></button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <button onclick="bukaModalRumus('editor-atp')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2"><i class="fas fa-square-root-alt"></i> Rumus</button>
+                                    <button onclick="bukaModalRumus('editor-atp')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-square-root-alt"></i> Rumus</button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <input type="file" id="upload-word-atp" accept=".docx" class="hidden" onchange="prosesUploadWord(event, 'editor-atp')">
-                                    <button onclick="document.getElementById('upload-word-atp').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2"><i class="fas fa-file-word"></i> Import Word</button>
+                                    <input type="file" id="upload-word-atp" accept=".docx" class="hidden" onchange="prosesUploadWordGlobal(event, 'editor-atp')">
+                                    <button onclick="document.getElementById('upload-word-atp').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-file-word"></i> Import Word</button>
                                 </div>
-                                <div id="editor-atp" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik atau Import ATP..."></div>
-                                <div class="mt-6 flex justify-end"><button onclick="simpanATPAdmin()" class="bg-sky-600 text-white px-8 py-3 rounded-xl font-bold shadow">Simpan ATP</button></div>
+                                <div id="editor-atp" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik ATP..."></div>
+                                <div class="mt-6 flex justify-end"><button onclick="simpanATPAdmin(event)" class="bg-sky-600 text-white px-8 py-3 rounded-xl font-bold shadow"><i class="fas fa-cloud-upload-alt"></i> Simpan ke Server</button></div>
                             </div>
 
                             <!-- TAB 2: TEORI -->
@@ -747,13 +739,13 @@
                                     <button onclick="formatTeks('editor-teori', 'insertUnorderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ul"></i></button>
                                     <button onclick="formatTeks('editor-teori', 'insertOrderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ol"></i></button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <button onclick="bukaModalRumus('editor-teori')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2"><i class="fas fa-square-root-alt"></i> Rumus</button>
+                                    <button onclick="bukaModalRumus('editor-teori')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-square-root-alt"></i> Rumus</button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <input type="file" id="upload-word-teori" accept=".docx" class="hidden" onchange="prosesUploadWord(event, 'editor-teori')">
-                                    <button onclick="document.getElementById('upload-word-teori').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2"><i class="fas fa-file-word"></i> Import Word</button>
+                                    <input type="file" id="upload-word-teori" accept=".docx" class="hidden" onchange="prosesUploadWordGlobal(event, 'editor-teori')">
+                                    <button onclick="document.getElementById('upload-word-teori').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-file-word"></i> Import Word</button>
                                 </div>
-                                <div id="editor-teori" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik atau Import Teori..."></div>
-                                <div class="mt-6 flex justify-end"><button onclick="simpanTeoriAdmin()" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow">Simpan Teori</button></div>
+                                <div id="editor-teori" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik Teori..."></div>
+                                <div class="mt-6 flex justify-end"><button onclick="simpanTeoriAdmin(event)" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow"><i class="fas fa-cloud-upload-alt"></i> Simpan ke Server</button></div>
                             </div>
 
                             <!-- TAB 3: LKPD -->
@@ -776,19 +768,19 @@
                                     <button onclick="formatTeks('editor-lkpd', 'insertUnorderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ul"></i></button>
                                     <button onclick="formatTeks('editor-lkpd', 'insertOrderedList')" class="w-8 h-8 bg-white rounded border border-slate-200 text-slate-700"><i class="fas fa-list-ol"></i></button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <button onclick="bukaModalRumus('editor-lkpd')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2"><i class="fas fa-square-root-alt"></i> Rumus</button>
+                                    <button onclick="bukaModalRumus('editor-lkpd')" class="px-3 py-1 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-square-root-alt"></i> Rumus</button>
                                     <div class="w-px bg-slate-300 mx-1 h-6"></div>
-                                    <input type="file" id="upload-word-lkpd" accept=".docx" class="hidden" onchange="prosesUploadWord(event, 'editor-lkpd')">
-                                    <button onclick="document.getElementById('upload-word-lkpd').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2"><i class="fas fa-file-word"></i> Import Word</button>
+                                    <input type="file" id="upload-word-lkpd" accept=".docx" class="hidden" onchange="prosesUploadWordGlobal(event, 'editor-lkpd')">
+                                    <button onclick="document.getElementById('upload-word-lkpd').click()" class="px-3 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold flex items-center gap-2 text-sm"><i class="fas fa-file-word"></i> Import Word</button>
                                 </div>
-                                <div id="editor-lkpd" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik atau Import LKPD..."></div>
-                                <div class="mt-6 flex justify-end"><button onclick="simpanLKPDAdmin()" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow">Simpan LKPD</button></div>
+                                <div id="editor-lkpd" contenteditable="true" class="editor-word w-full min-h-[300px] border-2 border-t-0 border-slate-200 rounded-b-xl p-6 bg-white focus:outline-none focus:border-indigo-500 text-lg text-slate-700 materi-html-render" placeholder="Ketik LKPD..."></div>
+                                <div class="mt-6 flex justify-end"><button onclick="simpanLKPDAdmin(event)" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow"><i class="fas fa-cloud-upload-alt"></i> Simpan ke Server</button></div>
                             </div>
 
                             <!-- TAB 4: QUIZ -->
                             <div id="tab-admin-quiz" class="tab-admin">
                                 <textarea id="input-admin-quiz" rows="10" class="w-full font-mono text-sm border-2 border-slate-200 rounded-xl p-4 mb-4 focus:outline-none focus:border-indigo-500" placeholder='[ { "tanya": "Soal...", "opsi": ["A", "B"], "jawaban": 0 } ]'></textarea>
-                                <div class="flex justify-end"><button onclick="simpanQuizAdmin()" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow">Simpan Quiz</button></div>
+                                <div class="flex justify-end"><button onclick="simpanQuizAdmin(event)" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow"><i class="fas fa-cloud-upload-alt"></i> Simpan ke Server</button></div>
                             </div>
                             
                             <!-- TAB 5: EVALUASI -->
@@ -798,17 +790,19 @@
                                     <p class="text-sm text-blue-600 mt-1">Gunakan JSON dengan atribut <b>"tipe": "pg"</b> atau <b>"tipe": "esai"</b>. Siswa di bawah 70 wajib meminta PIN Rahasia Guru untuk remedial.</p>
                                 </div>
                                 <textarea id="input-admin-eval" rows="12" class="w-full font-mono text-sm border-2 border-slate-200 rounded-xl p-4 mb-4 focus:outline-none focus:border-indigo-500" placeholder='Evaluasi JSON'></textarea>
-                                <div class="flex justify-end"><button onclick="simpanEvalAdmin()" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow">Simpan Soal Evaluasi</button></div>
+                                <div class="flex justify-end"><button onclick="simpanEvalAdmin(event)" class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold shadow"><i class="fas fa-cloud-upload-alt"></i> Simpan ke Server</button></div>
                             </div>
 
                             <!-- TAB 6: CEK LKPD SISWA -->
                             <div id="tab-admin-cek-lkpd" class="tab-admin">
                                 <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6">
-                                    <h3 class="text-xl font-black text-slate-800 mb-2"><i class="fas fa-folder-open text-amber-500"></i> Cek Jawaban LKPD Siswa</h3>
-                                    <p class="text-sm text-amber-800 mb-4">Guru sekarang bisa mengecek nilai & LKPD langsung dari <b>Dashboard Supabase</b>, namun riwayat pengerjaan lokal siswa tetap bisa dilihat di bawah ini jika mereka menggunakan perangkat yang sama dengan guru.</p>
+                                    <h3 class="text-xl font-black text-slate-800 mb-2"><i class="fas fa-cloud-download-alt text-amber-500"></i> Cek Jawaban LKPD Siswa (Dari Server)</h3>
+                                    <p class="text-sm text-amber-800 mb-4">Guru bisa langsung menarik data nilai dan jawaban esai siswa dari database <b>Supabase</b>.</p>
                                     <div class="flex gap-4">
-                                        <select id="pilih-siswa-lkpd" class="flex-1 border-2 border-amber-300 rounded-xl px-4 py-2 font-bold focus:outline-none"></select>
-                                        <button onclick="lihatLKPDSiswaAdmin()" class="bg-amber-600 text-white px-6 py-2 rounded-xl font-bold shadow hover:bg-amber-700">Buka Jawaban Lokal</button>
+                                        <select id="pilih-siswa-lkpd" class="flex-1 border-2 border-amber-300 rounded-xl px-4 py-2 font-bold focus:outline-none">
+                                            <option value="">-- Menunggu Database... --</option>
+                                        </select>
+                                        <button onclick="lihatLKPDSiswaAdmin()" class="bg-amber-600 text-white px-6 py-2 rounded-xl font-bold shadow hover:bg-amber-700">Lihat Jawaban</button>
                                     </div>
                                     <div id="hasil-lkpd-lokal-admin" class="mt-6 p-6 bg-white border border-slate-200 rounded-xl hidden materi-html-render"></div>
                                 </div>
@@ -826,38 +820,76 @@
     <script>
         // INISIALISASI SUPABASE
         const { createClient } = supabase;
-        // PENTING: Ganti kedua baris di bawah ini dengan URL dan Key dari Dashboard Supabase Anda
         const supabaseUrl = 'https://trhjfohqgggucjmopvfq.supabase.co'; 
         const supabaseAnonKey = 'sb_publishable_TZweHs9ThbOKuYx0VAYFxg_hEEBb_I8'; 
         const supabaseDb = createClient(supabaseUrl, supabaseAnonKey);
 
-        // FUNGSI PINTAR: Menyimpan Nilai ke Tabel "nilai siswa"
+        // CACHE GLOBAL APP DATA
+        window.appData = {};
+        window.tempLkpdAdmin = {};
+
+        // 1. FUNGSI UNTUK MENGUNDUH SEMUA KONTEN DARI SUPABASE (SAAT WEB DIBUKA)
+        async function muatSemuaKontenDariSupabase() {
+            try {
+                const { data, error } = await supabaseDb.from('konten_aplikasi').select('*');
+                if (data) {
+                    data.forEach(item => { window.appData[item.kunci] = item.nilai; });
+                }
+            } catch(e) { console.error("Gagal menarik data dari server:", e); }
+        }
+
+        // 2. FUNGSI UNTUK MENGIRIM / MENYIMPAN KONTEN KE SUPABASE (UNTUK GURU)
+        async function simpanKontenGlobal(kunci, nilai) {
+            window.appData[kunci] = nilai; // Update di layar langsung
+            try {
+                const { error } = await supabaseDb
+                    .from('konten_aplikasi')
+                    .upsert({ kunci: kunci, nilai: nilai }, { onConflict: 'kunci' });
+                if (error) console.error("Error Simpan:", error);
+            } catch(e) { console.error("Gagal simpan ke server:", e); }
+        }
+
+        // FUNGSI UNTUK MENGIRIM NILAI SISWA (Punya Siswa)
         async function simpanNilaiKeDatabase(kolomTarget, nilai) {
             if(currentRole !== 'siswa' || !modulAktif) return;
             try {
-                // 1. Cek apakah nama siswa ini sudah ada di tabel
-                const { data: existingData, error: selectError } = await supabaseDb
-                    .from('nilai siswa')
-                    .select('id')
-                    .eq('nama siswa', currentUser)
-                    .maybeSingle();
-
+                const { data: existingData } = await supabaseDb.from('nilai siswa').select('id').eq('nama siswa', currentUser).maybeSingle();
                 if (existingData) {
-                    // 2. Jika sudah ada, UPDATE baris miliknya
-                    const { error: updateError } = await supabaseDb
-                        .from('nilai siswa')
-                        .update({ [kolomTarget]: nilai })
-                        .eq('id', existingData.id);
-                    if (updateError) console.error("Update Error:", updateError);
+                    await supabaseDb.from('nilai siswa').update({ [kolomTarget]: nilai }).eq('id', existingData.id);
                 } else {
-                    // 3. Jika belum ada, buat baris baru (INSERT)
-                    const { error: insertError } = await supabaseDb
-                        .from('nilai siswa')
-                        .insert([{ 'nama siswa': currentUser, [kolomTarget]: nilai }]);
-                    if (insertError) console.error("Insert Error:", insertError);
+                    await supabaseDb.from('nilai siswa').insert([{ 'nama siswa': currentUser, [kolomTarget]: nilai }]);
                 }
-            } catch (e) { console.error("Gagal konek Supabase:", e); }
+            } catch (e) { console.error("Gagal ngirim nilai ke Supabase:", e); }
         }
+
+        // SAAT HALAMAN SELESAI DIMUAT
+        window.onload = async function() {
+            // Tunggu data ditarik dari server
+            await muatSemuaKontenDariSupabase();
+            
+            // Hilangkan layar loading
+            const loader = document.getElementById('global-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+
+            // Render UI
+            renderDashboardUtama();
+            populateDropdownAdmin();
+            terapkanLogoLembaga();
+
+            let namaTersimpan = localStorage.getItem('mathlearn_nama');
+            let roleTersimpan = localStorage.getItem('mathlearn_role') || 'siswa';
+            let avatarTersimpan = localStorage.getItem('mathlearn_avatar_' + namaTersimpan);
+            
+            if (namaTersimpan) {
+                document.getElementById('modal-login').style.display = 'none';
+                terapkanNamaDanPeran(namaTersimpan, roleTersimpan, avatarTersimpan);
+            } else {
+                document.getElementById('modal-login').classList.remove('hidden');
+            }
+            renderPapanPeringkat();
+            setTimeout(gambarGrafikKoordinat, 500);
+        };
 
         const kurikulumMatematika = {
             "Kelas 7": [
@@ -889,9 +921,9 @@
         let currentRole = "siswa";
         let currentAvatarBase64 = "";
         let leaderboardDB = JSON.parse(localStorage.getItem('mathlearn_leaderboard')) || [];
-
-        // VARIASI AUDIO (Web Audio API)
         let audioCtx = null;
+
+        // SISTEM SUARA BARU YANG LEBIH CANGGIH & BERVARIASI
         function playSound(type) {
             try {
                 if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -900,54 +932,67 @@
                 osc.connect(g); g.connect(audioCtx.destination);
                 let now = audioCtx.currentTime;
                 
-                if(type === 'success') {
-                    osc.frequency.setValueAtTime(500, now);
-                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.15);
-                } else if(type === 'error') {
-                    osc.frequency.setValueAtTime(300, now);
-                    osc.frequency.exponentialRampToValueAtTime(150, now + 0.15);
+                if (type === 'success') {
+                    // Suara Ting! (Dua Nada Berurutan)
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                    g.gain.setValueAtTime(0.2, now);
+                    g.gain.linearRampToValueAtTime(0, now + 0.3);
+                    osc.start(now); osc.stop(now + 0.3);
+                } else if (type === 'error') {
+                    // Suara Buzzer (Rendah & Kasar)
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.2);
+                    g.gain.setValueAtTime(0.2, now);
+                    g.gain.linearRampToValueAtTime(0, now + 0.3);
+                    osc.start(now); osc.stop(now + 0.3);
+                } else if (type === 'pop') {
+                    // Suara Pop Halus (Untuk pindah Tab/Menu)
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+                    g.gain.setValueAtTime(0.15, now);
+                    g.gain.linearRampToValueAtTime(0, now + 0.05);
+                    osc.start(now); osc.stop(now + 0.05);
                 } else {
-                    osc.frequency.setValueAtTime(450, now);
-                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
+                    // Suara Click Standar (Untuk tombol biasa)
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.05);
+                    g.gain.setValueAtTime(0.1, now);
+                    g.gain.linearRampToValueAtTime(0, now + 0.05);
+                    osc.start(now); osc.stop(now + 0.05);
                 }
-                
-                g.gain.setValueAtTime(0.15, now); 
-                g.gain.exponentialRampToValueAtTime(0.01, now + (type === 'success' ? 0.15 : 0.08));
-                osc.start(now); osc.stop(now + (type === 'success' ? 0.15 : 0.08));
             } catch(e) {}
         }
-
+        
+        // PENGATURAN SUARA GLOBAL BERDASARKAN TOMBOL YANG DIKLIK
         function playClickSoundGlobal(e) { 
-            if(e.target.closest('button, .card-hover-effect')) {
-                let btn = e.target.closest('button, .card-hover-effect');
-                let type = 'click';
-                if(btn.classList.contains('bg-green-600') || btn.classList.contains('bg-blue-600') || btn.classList.contains('bg-orange-500')) {
-                    type = 'success';
-                }
+            if(e.target.closest('button, .card-hover-effect, .tab-btn-tk, .tab-btn-admin, .menu-btn')) {
+                let btn = e.target.closest('button, .card-hover-effect, .tab-btn-tk, .tab-btn-admin, .menu-btn');
+                let type = 'click'; 
+                // Tombol aksi penting = success
+                if(btn.classList.contains('bg-green-600') || btn.classList.contains('bg-blue-600') || btn.classList.contains('bg-orange-500') || btn.classList.contains('bg-indigo-600')) type = 'success';
+                // Tombol pindah tab/menu = pop
+                if(btn.classList.contains('tab-btn-tk') || btn.classList.contains('tab-btn-admin') || btn.classList.contains('menu-btn') || btn.classList.contains('card-hover-effect')) type = 'pop';
+                
                 playSound(type);
             }
         }
-
-        function toggleFormFoto(isSiswa) {
-            let area = document.getElementById('area-upload-foto');
-            if(isSiswa) area.style.display = 'block';
-            else area.style.display = 'none';
-        }
-
+        
+        function toggleFormFoto(isSiswa) { document.getElementById('area-upload-foto').style.display = isSiswa ? 'block' : 'none'; }
         function previewFotoProfil(event) {
-            let file = event.target.files[0];
-            if(!file) return;
+            let file = event.target.files[0]; if(!file) return;
             let reader = new FileReader();
-            reader.onload = function(e) {
-                currentAvatarBase64 = e.target.result;
-                let previewBox = document.getElementById('preview-avatar-login');
-                previewBox.innerHTML = `<img src="${currentAvatarBase64}" class="w-full h-full object-cover rounded-full">`;
-            }
+            reader.onload = function(e) { currentAvatarBase64 = e.target.result; document.getElementById('preview-avatar-login').innerHTML = `<img src="${currentAvatarBase64}" class="w-full h-full object-cover rounded-full">`; }
             reader.readAsDataURL(file);
         }
 
+        // MENGAMBIL LOGO DARI SERVER
         function terapkanLogoLembaga() {
-            let savedLogo = localStorage.getItem('akselerasi_logo');
+            let savedLogo = window.appData['akselerasi_logo'];
             let containerSidebar = document.getElementById('sidebar-logo-container');
             let previewBoxLogin = document.getElementById('logo-preview-box');
             if(savedLogo) {
@@ -955,431 +1000,191 @@
                 if(previewBoxLogin) previewBoxLogin.innerHTML = `<img src="${savedLogo}" class="w-full h-full object-cover">`;
             }
         }
-
-        function simpanLogoLembaga() {
+        
+        // MENGIRIM LOGO KE SERVER
+        async function simpanLogoLembaga() {
             let fileInput = document.getElementById('input-logo-lembaga');
             if(fileInput.files && fileInput.files[0]) {
                 let reader = new FileReader();
-                reader.onload = function(e) {
-                    localStorage.setItem('akselerasi_logo', e.target.result);
+                reader.onload = async function(e) {
+                    await simpanKontenGlobal('akselerasi_logo', e.target.result);
                     terapkanLogoLembaga();
-                    tampilkanPesan("Berhasil!", "Logo Akselerasi Privat berhasil diperbarui.", "bg-green-100", "text-green-600", "bg-green-500", "✅");
+                    playSound('success');
+                    tampilkanPesan("Berhasil!", "Logo tersimpan di server Supabase.", "bg-green-100", "text-green-600", "bg-green-500", "✅");
                 }
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
+                playSound('error');
                 alert("Pilih file gambar logo terlebih dahulu!");
             }
-        }
-
-        function resetLogoLembaga() {
-            localStorage.removeItem('akselerasi_logo');
-            let containerSidebar = document.getElementById('sidebar-logo-container');
-            let previewBoxLogin = document.getElementById('logo-preview-box');
-            if(containerSidebar) containerSidebar.innerHTML = `<i class="fas fa-bolt text-white"></i>`;
-            if(previewBoxLogin) previewBoxLogin.innerHTML = `<i class="fas fa-bolt"></i>`;
-            tampilkanPesan("Berhasil", "Logo dikembalikan ke default.", "bg-blue-100", "text-blue-600", "bg-blue-500", "⚡");
         }
 
         function bukaTabToolkit(idTab, elemenBtn) {
             document.querySelectorAll('.tab-toolkit').forEach(t => t.classList.remove('aktif'));
             document.getElementById(idTab).classList.add('aktif');
-            document.querySelectorAll('.tab-btn-tk').forEach(b => {
-                b.className = "tab-btn-tk flex-1 py-3 px-4 font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2";
-            });
+            document.querySelectorAll('.tab-btn-tk').forEach(b => { b.className = "tab-btn-tk flex-1 py-3 px-4 font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition text-xs sm:text-sm flex items-center justify-center gap-2"; });
             elemenBtn.className = "tab-btn-tk flex-1 py-3 px-4 font-bold bg-sky-600 text-white rounded-xl shadow transition text-xs sm:text-sm flex items-center justify-center gap-2";
             if(idTab === 'tab-tk-grafik') setTimeout(gambarGrafikKoordinat, 100);
         }
 
-        function calcAppend(val) { 
-            let d = document.getElementById('calc-display'); 
-            d.value = (d.value === '0' || d.value === 'Error') ? val : d.value + val; 
-        }
-        function calcDelete() {
-            let d = document.getElementById('calc-display');
-            if (d.value !== '0' && d.value !== 'Error') {
-                d.value = d.value.slice(0, -1);
-                if (d.value === '') d.value = '0';
-            }
-        }
+        function calcAppend(val) { let d = document.getElementById('calc-display'); d.value = (d.value === '0' || d.value === 'Error') ? val : d.value + val; }
+        function calcDelete() { let d = document.getElementById('calc-display'); if (d.value !== '0' && d.value !== 'Error') { d.value = d.value.slice(0, -1); if (d.value === '') d.value = '0'; } }
         function calcClear() { document.getElementById('calc-display').value = '0'; }
         function calcResult() {
             let d = document.getElementById('calc-display');
             try {
-                let expr = d.value;
-                expr = expr.replace(/×/g, '*').replace(/÷/g, '/');
-                expr = expr.replace(/sin\(/g, 'Math.sin(Math.PI/180 * ');
-                expr = expr.replace(/cos\(/g, 'Math.cos(Math.PI/180 * ');
-                expr = expr.replace(/tan\(/g, 'Math.tan(Math.PI/180 * ');
-                expr = expr.replace(/√\(/g, 'Math.sqrt(');
-                expr = expr.replace(/²/g, '**2');
-                
-                let openCount = (expr.match(/\(/g) || []).length;
-                let closeCount = (expr.match(/\)/g) || []).length;
+                let expr = d.value.replace(/×/g, '*').replace(/÷/g, '/').replace(/sin\(/g, 'Math.sin(Math.PI/180 * ').replace(/cos\(/g, 'Math.cos(Math.PI/180 * ').replace(/tan\(/g, 'Math.tan(Math.PI/180 * ').replace(/√\(/g, 'Math.sqrt(').replace(/²/g, '**2');
+                let openCount = (expr.match(/\(/g) || []).length, closeCount = (expr.match(/\)/g) || []).length;
                 for (let i = 0; i < openCount - closeCount; i++) expr += ')';
-
-                let res = eval(expr);
-                d.value = Number.isFinite(res) ? parseFloat(res.toFixed(6)) : 'Error';
-            } catch(e) {
-                d.value = 'Error';
-            }
+                let res = eval(expr); d.value = Number.isFinite(res) ? parseFloat(res.toFixed(6)) : 'Error';
+            } catch(e) { d.value = 'Error'; }
         }
 
         function hitungRasio() {
-            let a1 = parseFloat(document.getElementById('rasio-a1').value);
-            let b1 = parseFloat(document.getElementById('rasio-b1').value);
-            let a2 = parseFloat(document.getElementById('rasio-a2').value);
-            let b2 = (b1 * a2) / a1;
-            document.getElementById('hasil-rasio').innerHTML = `Hasil B2: <b class="text-purple-700 text-lg">${b2}</b>`;
+            let a1 = parseFloat(document.getElementById('rasio-a1').value), b1 = parseFloat(document.getElementById('rasio-b1').value), a2 = parseFloat(document.getElementById('rasio-a2').value);
+            document.getElementById('hasil-rasio').innerHTML = `Hasil B2: <b class="text-purple-700 text-lg">${(b1 * a2) / a1}</b>`;
         }
-
         function hitungKesebangunan() {
-            let a1 = parseFloat(document.getElementById('seb-a1').value);
-            let b1 = parseFloat(document.getElementById('seb-b1').value);
-            let a2 = parseFloat(document.getElementById('seb-a2').value);
-            let b2 = (b1 * a2) / a1;
-            document.getElementById('hasil-sebangun').innerHTML = `Tinggi B2: <b class="text-green-700 text-lg">${b2}</b>`;
+            let a1 = parseFloat(document.getElementById('seb-a1').value), b1 = parseFloat(document.getElementById('seb-b1').value), a2 = parseFloat(document.getElementById('seb-a2').value);
+            document.getElementById('hasil-sebangun').innerHTML = `Tinggi B2: <b class="text-green-700 text-lg">${(b1 * a2) / a1}</b>`;
         }
-
+        function hitungPythagoras() {
+            let a = parseFloat(document.getElementById('pyt-a').value), b = parseFloat(document.getElementById('pyt-b').value);
+            document.getElementById('hasil-pythagoras').innerHTML = `Sisi Miring (c): <b class="text-rose-700 text-lg">${Math.sqrt((a*a) + (b*b)).toFixed(2)}</b>`;
+        }
         function hitungStatistika() {
             let arr = document.getElementById('stat-data').value.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
             if(arr.length === 0) return;
-            
-            arr.sort((a,b)=>a-b);
-            let sum = arr.reduce((a,b)=>a+b,0);
-            
-            let mean = (sum/arr.length).toFixed(2);
+            arr.sort((a,b)=>a-b); let sum = arr.reduce((a,b)=>a+b,0), mean = (sum/arr.length).toFixed(2);
             let median = arr.length % 2 === 0 ? ((arr[arr.length/2 - 1] + arr[arr.length/2])/2).toFixed(2) : arr[Math.floor(arr.length/2)];
-            
-            let map = {};
+            let map = {}, maxFreq = 0, modus = [];
             arr.forEach(n => map[n] = (map[n] || 0) + 1);
-            let maxFreq = 0;
-            let modus = [];
-            for (let n in map) {
-                if (map[n] > maxFreq) {
-                    maxFreq = map[n];
-                    modus = [Number(n)];
-                } else if (map[n] === maxFreq) {
-                    modus.push(Number(n));
-                }
-            }
-            if (maxFreq === 1) modus = ["Tidak ada"];
-            let modusStr = modus.join(", ");
-
-            document.getElementById('hasil-stat').innerHTML = `
-                <div class="grid grid-cols-3 gap-2 text-center text-sm">
-                    <div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Mean / Rata-rata</span><b class="text-xl">${mean}</b></div>
-                    <div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Median / Nilai Tengah</span><b class="text-xl">${median}</b></div>
-                    <div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Modus / Nilai Sering</span><b class="text-xl">${modusStr}</b></div>
-                </div>
-            `;
+            for (let n in map) { if (map[n] > maxFreq) { maxFreq = map[n]; modus = [Number(n)]; } else if (map[n] === maxFreq) { modus.push(Number(n)); } }
+            let modusStr = maxFreq === 1 ? "Tidak ada" : modus.join(", ");
+            document.getElementById('hasil-stat').innerHTML = `<div class="grid grid-cols-3 gap-2 text-center text-sm"><div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Mean</span><b class="text-xl">${mean}</b></div><div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Median</span><b class="text-xl">${median}</b></div><div class="bg-amber-100 p-2 rounded-xl text-amber-800"><span class="block text-[10px] font-black uppercase mb-1">Modus</span><b class="text-xl">${modusStr}</b></div></div>`;
         }
-
-        function hitungPythagoras() {
-            let a = parseFloat(document.getElementById('pyt-a').value);
-            let b = parseFloat(document.getElementById('pyt-b').value);
-            let c = Math.sqrt((a*a) + (b*b)).toFixed(2);
-            document.getElementById('hasil-pythagoras').innerHTML = `Sisi Miring (c): <b class="text-rose-700 text-lg">${c}</b>`;
-        }
-
         function gambarGrafikKoordinat() {
-            let x1 = parseFloat(document.getElementById('x1').value);
-            let y1 = parseFloat(document.getElementById('y1').value);
-            let x2 = parseFloat(document.getElementById('x2').value);
-            let y2 = parseFloat(document.getElementById('y2').value);
-            
-            let canvas = document.getElementById('canvas-grafik');
-            if(!canvas) return;
-            let ctx = canvas.getContext('2d');
-            let w = canvas.width, h = canvas.height;
-            
-            ctx.clearRect(0,0,w,h);
-            ctx.fillStyle = "#020617";
-            ctx.fillRect(0,0,w,h);
-            
-            let cx = w/2, cy = h/2, scale = 15;
-            
-            ctx.strokeStyle = "#334155"; 
-            ctx.lineWidth = 1;
-            ctx.beginPath(); 
-            ctx.moveTo(0,cy); ctx.lineTo(w,cy); 
-            ctx.moveTo(cx,0); ctx.lineTo(cx,h); 
-            ctx.stroke();
-            
-            let px1 = cx + (x1 * scale);
-            let py1 = cy - (y1 * scale);
-            let px2 = cx + (x2 * scale);
-            let py2 = cy - (y2 * scale);
-
-            if (x1 !== x2 || y1 !== y2) {
-                let dx = px2 - px1;
-                let dy = py2 - py1;
-                
-                ctx.strokeStyle = "#3b82f6";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(px1 - dx*10, py1 - dy*10); 
-                ctx.lineTo(px2 + dx*10, py2 + dy*10); 
-                ctx.stroke();
-            }
-            
-            ctx.fillStyle = "#ef4444";
-            ctx.beginPath(); ctx.arc(px1, py1, 5, 0, Math.PI*2); ctx.fill();
-            ctx.beginPath(); ctx.arc(px2, py2, 5, 0, Math.PI*2); ctx.fill();
-
-            let m = 0;
-            let textGradien = "0";
-            let c = y1;
-            
-            if(x2 - x1 === 0) {
-                textGradien = "Tak Terhingga (Garis Vertikal)";
-                document.getElementById('info-hasil-grafik').innerHTML = `Persamaan: <b>x = ${x1}</b> | Gradien: <b class="text-red-500">${textGradien}</b>`;
-            } else {
-                m = (y2-y1)/(x2-x1);
-                c = y1 - (m * x1);
-                
-                let mText = Number.isInteger(m) ? m : m.toFixed(2);
-                let cText = Number.isInteger(c) ? c : c.toFixed(2);
-                
-                let tandaC = c >= 0 ? `+ ${cText}` : `- ${Math.abs(c)}`;
-                
-                document.getElementById('info-hasil-grafik').innerHTML = `Gradien (m) = <b class="text-indigo-600 text-lg">${mText}</b> <br> Persamaan: <b>y = ${mText}x ${c !== 0 ? tandaC : ''}</b>`;
-            }
+            let x1 = parseFloat(document.getElementById('x1').value), y1 = parseFloat(document.getElementById('y1').value), x2 = parseFloat(document.getElementById('x2').value), y2 = parseFloat(document.getElementById('y2').value);
+            let canvas = document.getElementById('canvas-grafik'); if(!canvas) return;
+            let ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height, cx = w/2, cy = h/2, scale = 15;
+            ctx.clearRect(0,0,w,h); ctx.fillStyle = "#020617"; ctx.fillRect(0,0,w,h);
+            ctx.strokeStyle = "#334155"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(w,cy); ctx.moveTo(cx,0); ctx.lineTo(cx,h); ctx.stroke();
+            let px1 = cx + (x1 * scale), py1 = cy - (y1 * scale), px2 = cx + (x2 * scale), py2 = cy - (y2 * scale);
+            if (x1 !== x2 || y1 !== y2) { let dx = px2 - px1, dy = py2 - py1; ctx.strokeStyle = "#3b82f6"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px1 - dx*10, py1 - dy*10); ctx.lineTo(px2 + dx*10, py2 + dy*10); ctx.stroke(); }
+            ctx.fillStyle = "#ef4444"; ctx.beginPath(); ctx.arc(px1, py1, 5, 0, Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(px2, py2, 5, 0, Math.PI*2); ctx.fill();
+            if(x2 - x1 === 0) { document.getElementById('info-hasil-grafik').innerHTML = `Persamaan: <b>x = ${x1}</b> | Gradien: <b class="text-red-500">Tak Terhingga</b>`; } 
+            else { let m = (y2-y1)/(x2-x1), c = y1 - (m * x1), mText = Number.isInteger(m) ? m : m.toFixed(2), cText = Number.isInteger(c) ? c : c.toFixed(2), tandaC = c >= 0 ? `+ ${cText}` : `- ${Math.abs(c)}`; document.getElementById('info-hasil-grafik').innerHTML = `Gradien (m) = <b class="text-indigo-600 text-lg">${mText}</b> <br> Persamaan: <b>y = ${mText}x ${c !== 0 ? tandaC : ''}</b>`; }
         }
 
-        window.onload = function() {
-            renderDashboardUtama();
-            populateDropdownAdmin();
-            terapkanLogoLembaga();
-            let namaTersimpan = localStorage.getItem('mathlearn_nama');
-            let roleTersimpan = localStorage.getItem('mathlearn_role') || 'siswa';
-            let avatarTersimpan = localStorage.getItem('mathlearn_avatar_' + namaTersimpan);
-            if (namaTersimpan) {
-                document.getElementById('modal-login').style.display = 'none';
-                terapkanNamaDanPeran(namaTersimpan, roleTersimpan, avatarTersimpan);
-            }
-            renderPapanPeringkat();
-            setTimeout(gambarGrafikKoordinat, 500);
-        };
-
-        function toggleSidebar() {
-            let s = document.getElementById('sidebar-utama'), m = document.getElementById('main-content'), i = document.getElementById('icon-toggle-sidebar');
-            s.classList.toggle('tertutup'); m.classList.toggle('lebar');
-            i.className = s.classList.contains('tertutup') ? "fas fa-chevron-right text-lg" : "fas fa-chevron-left text-lg";
-        }
-
+        function toggleSidebar() { let s = document.getElementById('sidebar-utama'), m = document.getElementById('main-content'), i = document.getElementById('icon-toggle-sidebar'); s.classList.toggle('tertutup'); m.classList.toggle('lebar'); i.className = s.classList.contains('tertutup') ? "fas fa-chevron-right text-lg" : "fas fa-chevron-left text-lg"; playSound('pop'); }
         function cetakPortrait() { document.getElementById('dynamic-print-style').innerHTML = "@page { size: portrait; margin: 1cm; }"; window.print(); }
         function cetakSertifikat() { document.getElementById('dynamic-print-style').innerHTML = "@page { size: A4 landscape; margin: 0; }"; document.body.classList.add('mode-cetak-sertifikat'); window.print(); setTimeout(() => document.body.classList.remove('mode-cetak-sertifikat'), 1000); }
 
         function prosesLogin() {
-            let nama = document.getElementById('input-nama').value.trim();
-            let pass = document.getElementById('input-pass').value.trim();
-            let role = document.querySelector('input[name="role_login"]:checked').value;
-            
-            if (nama === "") return tampilkanPesan("Gagal", "Nama wajib diisi.", "bg-red-100", "text-red-600", "bg-red-500", "⚠️");
-            
+            let nama = document.getElementById('input-nama').value.trim(), pass = document.getElementById('input-pass').value.trim(), role = document.querySelector('input[name="role_login"]:checked').value;
+            if (nama === "") { playSound('error'); return tampilkanPesan("Gagal", "Nama wajib diisi.", "bg-red-100", "text-red-600", "bg-red-500", "⚠️"); }
             if (role === 'guru' && pass !== "guru123") { playSound('error'); return tampilkanPesan("Ditolak", "Sandi Guru salah.", "bg-red-100", "text-red-600", "bg-red-500", "❌"); }
             if (role === 'admin' && pass !== "admin123") { playSound('error'); return tampilkanPesan("Ditolak", "Kode Akses Admin salah.", "bg-red-100", "text-red-600", "bg-red-500", "❌"); }
-            
-            if(currentAvatarBase64) {
-                localStorage.setItem('mathlearn_avatar_' + nama, currentAvatarBase64);
-            }
-
-            localStorage.setItem('mathlearn_nama', nama);
-            localStorage.setItem('mathlearn_role', role);
-            if(role === 'siswa' && !leaderboardDB.find(u => u.nama.toLowerCase() === nama.toLowerCase())) {
-                leaderboardDB.push({ nama: nama, skor: 0 });
-                localStorage.setItem('mathlearn_leaderboard', JSON.stringify(leaderboardDB));
-            }
-            
-            playSound('success');
-            document.getElementById('modal-login').style.opacity = '0';
-            setTimeout(() => { 
-                document.getElementById('modal-login').style.display = 'none'; 
-                terapkanNamaDanPeran(nama, role, currentAvatarBase64); 
-                renderPapanPeringkat(); 
-            }, 300);
+            if(currentAvatarBase64) localStorage.setItem('mathlearn_avatar_' + nama, currentAvatarBase64);
+            localStorage.setItem('mathlearn_nama', nama); localStorage.setItem('mathlearn_role', role);
+            if(role === 'siswa' && !leaderboardDB.find(u => u.nama.toLowerCase() === nama.toLowerCase())) { leaderboardDB.push({ nama: nama, skor: 0 }); localStorage.setItem('mathlearn_leaderboard', JSON.stringify(leaderboardDB)); }
+            playSound('success'); document.getElementById('modal-login').style.opacity = '0';
+            setTimeout(() => { document.getElementById('modal-login').style.display = 'none'; terapkanNamaDanPeran(nama, role, currentAvatarBase64); renderPapanPeringkat(); }, 300);
         }
 
         function terapkanNamaDanPeran(nama, role, avatar) {
-            currentUser = nama; currentRole = role;
-            document.getElementById('teks-nama-sidebar').innerText = nama;
-            let btnAdmin = document.getElementById('btn-mode-guru');
-            let avatarContainer = document.getElementById('avatar-container-sidebar');
-            
+            currentUser = nama; currentRole = role; document.getElementById('teks-nama-sidebar').innerText = nama;
+            let btnAdmin = document.getElementById('btn-mode-guru'), avatarContainer = document.getElementById('avatar-container-sidebar');
             if (role === 'guru') {
-                btnAdmin.classList.remove('hidden');
-                btnAdmin.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> Mode Guru`;
-                document.getElementById('role-sidebar').innerText = "Guru Pembimbing";
-                avatarContainer.innerHTML = `<i class="fas fa-chalkboard-teacher text-slate-300"></i>`;
-                
-                document.getElementById('area-khusus-guru').classList.remove('hidden');
-                document.getElementById('area-khusus-admin').classList.add('hidden');
-                document.getElementById('header-teks-panel').innerHTML = `<i class="fas fa-chalkboard-teacher"></i> Panel Mode Guru`;
-                document.getElementById('desc-teks-panel').innerText = "Kelola modul, materi, soal kuis, evaluasi, dan cek nilai LKPD siswa.";
-                
+                btnAdmin.classList.remove('hidden'); btnAdmin.innerHTML = `<i class="fas fa-chalkboard-teacher"></i> Mode Guru`; document.getElementById('role-sidebar').innerText = "Guru Pembimbing"; avatarContainer.innerHTML = `<i class="fas fa-chalkboard-teacher text-slate-300"></i>`;
+                document.getElementById('area-khusus-guru').classList.remove('hidden'); document.getElementById('area-khusus-admin').classList.add('hidden'); document.getElementById('header-teks-panel').innerHTML = `<i class="fas fa-chalkboard-teacher"></i> Panel Mode Guru`; document.getElementById('desc-teks-panel').innerText = "Kelola modul, materi, soal kuis, evaluasi, dan cek nilai LKPD siswa.";
             } else if (role === 'admin') {
-                btnAdmin.classList.remove('hidden');
-                btnAdmin.innerHTML = `<i class="fas fa-cogs"></i> Panel Teknis`;
-                btnAdmin.classList.replace('bg-indigo-600', 'bg-slate-800');
-                btnAdmin.classList.replace('hover:bg-indigo-500', 'hover:bg-slate-700');
-                document.getElementById('role-sidebar').innerText = "Administrator";
-                avatarContainer.innerHTML = `<i class="fas fa-user-shield text-slate-300"></i>`;
-
-                document.getElementById('area-khusus-admin').classList.remove('hidden');
-                document.getElementById('area-khusus-guru').classList.add('hidden');
-                document.getElementById('header-teks-panel').innerHTML = `<i class="fas fa-cogs"></i> Panel Admin Pengembang`;
-                document.getElementById('desc-teks-panel').innerText = "Pengaturan teknis, logo lembaga, backup database, dan rekap nilai global.";
-                
+                btnAdmin.classList.remove('hidden'); btnAdmin.innerHTML = `<i class="fas fa-cogs"></i> Panel Teknis`; btnAdmin.classList.replace('bg-indigo-600', 'bg-slate-800'); btnAdmin.classList.replace('hover:bg-indigo-500', 'hover:bg-slate-700'); document.getElementById('role-sidebar').innerText = "Administrator"; avatarContainer.innerHTML = `<i class="fas fa-user-shield text-slate-300"></i>`;
+                document.getElementById('area-khusus-admin').classList.remove('hidden'); document.getElementById('area-khusus-guru').classList.add('hidden'); document.getElementById('header-teks-panel').innerHTML = `<i class="fas fa-cogs"></i> Panel Admin Pengembang`; document.getElementById('desc-teks-panel').innerText = "Pengaturan teknis, logo lembaga, backup database, dan rekap nilai global.";
             } else {
-                btnAdmin.classList.add('hidden');
-                document.getElementById('role-sidebar').innerText = "Peserta Didik";
-                if(avatar) {
-                    avatarContainer.innerHTML = `<img src="${avatar}" class="w-full h-full object-cover">`;
-                } else {
-                    avatarContainer.innerHTML = `<i class="fas fa-user-graduate text-slate-300"></i>`;
-                }
+                btnAdmin.classList.add('hidden'); document.getElementById('role-sidebar').innerText = "Peserta Didik";
+                if(avatar) avatarContainer.innerHTML = `<img src="${avatar}" class="w-full h-full object-cover">`; else avatarContainer.innerHTML = `<i class="fas fa-user-graduate text-slate-300"></i>`;
             }
         }
-        function konfirmasiKeluar() { document.getElementById('modal-konfirmasi').classList.remove('hidden'); }
+        function konfirmasiKeluar() { playSound('pop'); document.getElementById('modal-konfirmasi').classList.remove('hidden'); }
         function tutupKonfirmasi() { document.getElementById('modal-konfirmasi').classList.add('hidden'); }
         function prosesKeluar() { localStorage.removeItem('mathlearn_nama'); localStorage.removeItem('mathlearn_role'); location.reload(); }
 
         function renderDashboardUtama() {
-            const areaKurikulum = document.getElementById('area-kurikulum');
-            areaKurikulum.innerHTML = ''; 
+            const areaKurikulum = document.getElementById('area-kurikulum'); areaKurikulum.innerHTML = ''; 
             for (const [namaKelas, daftarMateri] of Object.entries(kurikulumMatematika)) {
                 let bagianKelas = document.createElement('div');
-                bagianKelas.innerHTML = `
-                    <div class="flex items-center gap-4 border-b-2 border-slate-200 pb-2 mb-6">
-                        <span class="bg-slate-800 text-white px-5 py-2 rounded-full text-sm font-bold shadow-sm">${namaKelas}</span>
-                        <div class="flex-1 h-px bg-slate-200"></div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="grid-${namaKelas.replace(/\s+/g, '')}"></div>
-                `;
+                bagianKelas.innerHTML = `<div class="flex items-center gap-4 border-b-2 border-slate-200 pb-2 mb-6"><span class="bg-slate-800 text-white px-5 py-2 rounded-full text-sm font-bold shadow-sm">${namaKelas}</span><div class="flex-1 h-px bg-slate-200"></div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="grid-${namaKelas.replace(/\s+/g, '')}"></div>`;
                 areaKurikulum.appendChild(bagianKelas);
                 const gridMateri = document.getElementById(`grid-${namaKelas.replace(/\s+/g, '')}`);
                 daftarMateri.forEach(materi => {
-                    let kartu = document.createElement('div');
-                    kartu.className = `bg-white p-6 rounded-3xl shadow-sm border border-slate-100 card-hover-effect cursor-pointer flex flex-col border-t-4 border-t-${materi.warna}-500`;
-                    kartu.onclick = () => bukaModul(namaKelas, materi);
-                    kartu.innerHTML = `
-                        <div class="w-14 h-14 bg-${materi.warna}-50 rounded-2xl flex items-center justify-center text-${materi.warna}-600 text-2xl mb-4 shadow-inner"><i class="fas ${materi.ikon}"></i></div>
-                        <h4 class="font-black text-slate-800 text-lg mb-2">${materi.judul}</h4>
-                        <p class="text-sm text-slate-500 mb-6 flex-1">${materi.deskripsi}</p>
-                        <div class="flex items-center text-${materi.warna}-600 font-bold text-sm bg-${materi.warna}-50 p-2 rounded-xl w-fit">Buka Modul <i class="fas fa-arrow-right ml-2"></i></div>
-                    `;
+                    let kartu = document.createElement('div'); kartu.className = `bg-white p-6 rounded-3xl shadow-sm border border-slate-100 card-hover-effect cursor-pointer flex flex-col border-t-4 border-t-${materi.warna}-500`; kartu.onclick = () => bukaModul(namaKelas, materi);
+                    kartu.innerHTML = `<div class="w-14 h-14 bg-${materi.warna}-50 rounded-2xl flex items-center justify-center text-${materi.warna}-600 text-2xl mb-4 shadow-inner"><i class="fas ${materi.ikon}"></i></div><h4 class="font-black text-slate-800 text-lg mb-2">${materi.judul}</h4><p class="text-sm text-slate-500 mb-6 flex-1">${materi.deskripsi}</p><div class="flex items-center text-${materi.warna}-600 font-bold text-sm bg-${materi.warna}-50 p-2 rounded-xl w-fit">Buka Modul <i class="fas fa-arrow-right ml-2"></i></div>`;
                     gridMateri.appendChild(kartu);
                 });
             }
         }
 
-        function pindahKeDashboardUtama() {
-            document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif'));
-            document.getElementById('halaman-dashboard-utama').classList.add('aktif');
-            document.getElementById('topbar-title').innerText = "Dashboard Pembelajaran";
-            modulAktif = null;
-        }
+        function pindahKeDashboardUtama() { document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif')); document.getElementById('halaman-dashboard-utama').classList.add('aktif'); document.getElementById('topbar-title').innerText = "Dashboard Pembelajaran"; modulAktif = null; }
 
+        // MENGAMBIL DATA MODUL DARI SERVER SAAT DIBUKA
         function bukaModul(namaKelas, objekMateri) {
             modulAktif = objekMateri;
             document.getElementById('badge-kelas').innerText = "Matematika " + namaKelas;
             document.getElementById('hero-judul').innerText = objekMateri.judul;
             document.getElementById('hero-desc').innerText = objekMateri.deskripsi;
             
-            document.getElementById('konten-atp-dinamis').innerHTML = localStorage.getItem('atp_' + objekMateri.id) || '<div class="text-center text-slate-400 py-12">Data Target/ATP belum diisi.</div>';
-            document.getElementById('konten-teori-dinamis').innerHTML = localStorage.getItem('teori_' + objekMateri.id) || '<div class="text-center text-slate-400 py-12">Materi belum diisi.</div>';
-            document.getElementById('konten-lkpd-siswa').innerHTML = localStorage.getItem('lkpd_' + objekMateri.id) || '<div class="text-center text-slate-400 py-12">LKPD belum tersedia.</div>';
+            // Baca dari memori hasil download Supabase tadi (window.appData)
+            document.getElementById('konten-atp-dinamis').innerHTML = window.appData['atp_' + objekMateri.id] || '<div class="text-center text-slate-400 py-12">Data Target/ATP belum diisi oleh Guru.</div>';
+            document.getElementById('konten-teori-dinamis').innerHTML = window.appData['teori_' + objekMateri.id] || '<div class="text-center text-slate-400 py-12">Materi belum diisi oleh Guru.</div>';
+            document.getElementById('konten-lkpd-siswa').innerHTML = window.appData['lkpd_' + objekMateri.id] || '<div class="text-center text-slate-400 py-12">LKPD belum tersedia.</div>';
             
-            if (currentRole === 'siswa') {
-                document.getElementById('jawaban-lkpd-siswa').innerHTML = localStorage.getItem(`jawaban_lkpd_${currentUser}_${objekMateri.id}`) || "";
-            }
+            if (currentRole === 'siswa') document.getElementById('jawaban-lkpd-siswa').innerHTML = localStorage.getItem(`jawaban_lkpd_${currentUser}_${objekMateri.id}`) || "";
 
-            muatQuizSiswa(objekMateri.id);
-            muatEvaluasiSiswa(objekMateri.id);
-            pindahHalaman('beranda');
-            triggerMathJaxRender();
+            muatQuizSiswa(objekMateri.id); muatEvaluasiSiswa(objekMateri.id);
+            pindahHalaman('beranda'); triggerMathJaxRender();
         }
 
         function pindahHalaman(idTarget) {
             if(idTarget !== 'dashboard-utama' && idTarget !== 'admin' && idTarget !== 'peringkat' && idTarget !== 'toolkit' && modulAktif === null) {
+                playSound('error');
                 return tampilkanPesan("Tunggu!", "Pilih modul dari Dashboard terlebih dahulu.", "bg-orange-100", "text-orange-600", "bg-orange-500", "⚠️");
             }
-            document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif'));
-            document.getElementById('halaman-' + idTarget).classList.add('aktif');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if(idTarget === 'toolkit') setTimeout(gambarGrafikKoordinat, 100);
-            if(idTarget === 'peringkat') renderPapanPeringkat();
+            document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif')); document.getElementById('halaman-' + idTarget).classList.add('aktif'); window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(idTarget === 'toolkit') setTimeout(gambarGrafikKoordinat, 100); if(idTarget === 'peringkat') renderPapanPeringkat();
         }
 
         function renderPapanPeringkat() {
-            leaderboardDB.sort((a, b) => b.skor - a.skor);
-            let area = document.getElementById('area-leaderboard');
-            if(leaderboardDB.length === 0) return;
-            area.innerHTML = "";
+            leaderboardDB.sort((a, b) => b.skor - a.skor); let area = document.getElementById('area-leaderboard'); if(leaderboardDB.length === 0) return; area.innerHTML = "";
             leaderboardDB.forEach((siswa, index) => {
                 let isMe = (siswa.nama === currentUser && currentRole === 'siswa') ? "border-2 border-blue-400 bg-blue-50" : "border border-slate-100 bg-white";
-                area.innerHTML += `
-                    <div class="flex items-center justify-between p-4 rounded-2xl ${isMe} mb-2">
-                        <div class="flex items-center gap-4">
-                            <span class="font-bold text-slate-400 text-lg w-6 text-center">#${index + 1}</span>
-                            <div><h4 class="font-bold text-slate-800 text-lg">${siswa.nama}</h4></div>
-                        </div>
-                        <div class="bg-amber-100 text-amber-700 font-black px-4 py-2 rounded-xl text-lg">${siswa.skor} <i class="fas fa-star text-sm"></i></div>
-                    </div>`;
+                area.innerHTML += `<div class="flex items-center justify-between p-4 rounded-2xl ${isMe} mb-2"><div class="flex items-center gap-4"><span class="font-bold text-slate-400 text-lg w-6 text-center">#${index + 1}</span><div><h4 class="font-bold text-slate-800 text-lg">${siswa.nama}</h4></div></div><div class="bg-amber-100 text-amber-700 font-black px-4 py-2 rounded-xl text-lg">${siswa.skor} <i class="fas fa-star text-sm"></i></div></div>`;
             });
         }
         function tambahSkorKeLeaderboard(poin) {
             if(currentRole === 'guru' || currentRole === 'admin') return; 
             let idx = leaderboardDB.findIndex(u => u.nama.toLowerCase() === currentUser.toLowerCase());
-            if(idx !== -1) leaderboardDB[idx].skor += poin;
-            else leaderboardDB.push({ nama: currentUser, skor: poin });
-            localStorage.setItem('mathlearn_leaderboard', JSON.stringify(leaderboardDB));
-            renderPapanPeringkat();
+            if(idx !== -1) leaderboardDB[idx].skor += poin; else leaderboardDB.push({ nama: currentUser, skor: poin });
+            localStorage.setItem('mathlearn_leaderboard', JSON.stringify(leaderboardDB)); renderPapanPeringkat();
         }
         function triggerMathJaxRender() { setTimeout(() => { if(window.MathJax) MathJax.typesetPromise().catch(err => {}); }, 100); }
 
-        function simpanOtomatisLKPD() {
-            if(modulAktif && currentRole === 'siswa') localStorage.setItem(`jawaban_lkpd_${currentUser}_${modulAktif.id}`, document.getElementById('jawaban-lkpd-siswa').innerHTML);
-        }
+        function simpanOtomatisLKPD() { if(modulAktif && currentRole === 'siswa') localStorage.setItem(`jawaban_lkpd_${currentUser}_${modulAktif.id}`, document.getElementById('jawaban-lkpd-siswa').innerHTML); }
 
-        // MENGIRIM KE SUPABASE: Menambahkan Keterangan Modul
         async function submitLKPDSiswa(event) {
             simpanOtomatisLKPD(); 
-            
-            let tombolKirim = event.currentTarget;
-            let teksAsli = tombolKirim.innerHTML;
-            tombolKirim.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-            tombolKirim.disabled = true;
-
-            let jawabanHtml = document.getElementById('jawaban-lkpd-siswa').innerHTML;
-            let jawabanFinal = `<b>[${modulAktif.judul}]</b><br>` + jawabanHtml;
-            
-            try {
-                await simpanNilaiKeDatabase('Nilai LKPD', jawabanFinal);
-                playSound('success');
-                tampilkanPesan('Berhasil Terkirim!', 'Jawaban LKPD Anda sudah masuk ke database Guru.', 'bg-green-100', 'text-green-600', 'bg-green-500', '🎉');
-            } catch (error) {
-                console.error(error);
-                playSound('error');
-                tampilkanPesan('Gagal', 'Terjadi kesalahan saat mengirim ke server. Pastikan internet stabil.', 'bg-red-100', 'text-red-600', 'bg-red-500', '❌');
-            } finally {
-                tombolKirim.innerHTML = teksAsli;
-                tombolKirim.disabled = false;
-            }
+            let tombolKirim = event.currentTarget, teksAsli = tombolKirim.innerHTML; tombolKirim.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...'; tombolKirim.disabled = true;
+            let jawabanHtml = document.getElementById('jawaban-lkpd-siswa').innerHTML, jawabanFinal = `<b>[${modulAktif.judul}]</b><br>` + jawabanHtml;
+            try { await simpanNilaiKeDatabase('Nilai LKPD', jawabanFinal); playSound('success'); tampilkanPesan('Berhasil Terkirim!', 'Jawaban LKPD Anda sudah masuk ke database Guru.', 'bg-green-100', 'text-green-600', 'bg-green-500', '🎉'); } 
+            catch (error) { console.error(error); playSound('error'); tampilkanPesan('Gagal', 'Terjadi kesalahan saat mengirim ke server.', 'bg-red-100', 'text-red-600', 'bg-red-500', '❌'); } 
+            finally { tombolKirim.innerHTML = teksAsli; tombolKirim.disabled = false; }
         }
 
-        function shuffleArray(array) {
-            let arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
+        function shuffleArray(array) { let arr = [...array]; for (let i = arr.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
 
         function muatQuizSiswa(idM) {
             let area = document.getElementById('quiz-game-container');
-            let data = localStorage.getItem('quiz_' + idM);
+            let data = window.appData['quiz_' + idM]; // Ambil dari server
             if(data) {
                 try { 
                     let parsedData = JSON.parse(data);
@@ -1387,248 +1192,126 @@
                     if (selesaiSkor !== null) { window.aktifQuizSkor = parseInt(selesaiSkor); renderHasilQuiz(); return; }
                     
                     let savedQuizSession = localStorage.getItem(`sesi_quiz_${currentUser}_${idM}`);
-                    if (savedQuizSession) {
-                        window.aktifQuizData = JSON.parse(savedQuizSession);
-                    } else {
+                    if (savedQuizSession) window.aktifQuizData = JSON.parse(savedQuizSession);
+                    else {
                         let randomizedQuestions = shuffleArray(parsedData).map(soal => {
-                            let originalOptions = soal.opsi;
-                            let indexedOptions = originalOptions.map((opt, idx) => ({ text: opt, isCorrect: idx === soal.jawaban }));
-                            let shuffledIndexedOptions = shuffleArray(indexedOptions);
-                            return {
-                                tanya: soal.tanya,
-                                opsi: shuffledIndexedOptions.map(item => item.text),
-                                jawaban: shuffledIndexedOptions.findIndex(item => item.isCorrect)
-                            };
+                            let originalOptions = soal.opsi, indexedOptions = originalOptions.map((opt, idx) => ({ text: opt, isCorrect: idx === soal.jawaban })), shuffledIndexedOptions = shuffleArray(indexedOptions);
+                            return { tanya: soal.tanya, opsi: shuffledIndexedOptions.map(item => item.text), jawaban: shuffledIndexedOptions.findIndex(item => item.isCorrect) };
                         });
-                        window.aktifQuizData = randomizedQuestions;
-                        localStorage.setItem(`sesi_quiz_${currentUser}_${idM}`, JSON.stringify(randomizedQuestions));
+                        window.aktifQuizData = randomizedQuestions; localStorage.setItem(`sesi_quiz_${currentUser}_${idM}`, JSON.stringify(randomizedQuestions));
                     }
-
                     let prog = localStorage.getItem(`progres_quiz_${currentUser}_${idM}`);
-                    if(prog) { let p = JSON.parse(prog); window.aktifQuizIndex = p.index; window.aktifQuizSkor = p.skor; }
-                    else { window.aktifQuizIndex = 0; window.aktifQuizSkor = 0; }
+                    if(prog) { let p = JSON.parse(prog); window.aktifQuizIndex = p.index; window.aktifQuizSkor = p.skor; } else { window.aktifQuizIndex = 0; window.aktifQuizSkor = 0; }
                     renderSoalQuizSiswa();
-                } catch(e) { area.innerHTML = '<div class="text-center text-red-500 py-12">Format Quiz Error.</div>'; }
+                } catch(e) { area.innerHTML = '<div class="text-center text-red-500 py-12">Format Quiz Error dari Server.</div>'; }
             } else area.innerHTML = '<div class="text-center text-slate-400 py-12">Quiz belum tersedia.</div>';
         }
 
         function renderSoalQuizSiswa() {
-            let container = document.getElementById('quiz-game-container');
-            let arr = window.aktifQuizData; let idx = window.aktifQuizIndex;
+            let container = document.getElementById('quiz-game-container'), arr = window.aktifQuizData, idx = window.aktifQuizIndex;
             if(idx < arr.length) {
-                let html = `<div class="flex justify-between items-center mb-6"><span class="bg-purple-100 text-purple-700 font-bold px-4 py-1 rounded-full text-sm">Soal ${idx + 1} / ${arr.length}</span><span class="font-bold text-slate-500">Skor Sementara: ${window.aktifQuizSkor}</span></div><h3 class="text-2xl font-black text-slate-800 mb-6">${arr[idx].tanya}</h3><div class="space-y-3">`;
+                let html = `<div class="flex justify-between items-center mb-6"><span class="bg-purple-100 text-purple-700 font-bold px-4 py-1 rounded-full text-sm">Soal ${idx + 1} / ${arr.length}</span><span class="font-bold text-slate-500">Skor: ${window.aktifQuizSkor}</span></div><h3 class="text-2xl font-black text-slate-800 mb-6">${arr[idx].tanya}</h3><div class="space-y-3">`;
                 arr[idx].opsi.forEach((o, i) => { html += `<button onclick="jawabQuizSiswa(${i})" class="w-full bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl font-bold text-lg text-slate-700 hover:border-purple-500 transition text-left">${o}</button>`; });
                 container.innerHTML = html + `</div>`; triggerMathJaxRender();
             } else {
                 tambahSkorKeLeaderboard(window.aktifQuizSkor);
                 localStorage.setItem(`skor_quiz_${currentUser}_${modulAktif.id}`, window.aktifQuizSkor);
-                localStorage.removeItem(`progres_quiz_${currentUser}_${modulAktif.id}`);
-                localStorage.removeItem(`sesi_quiz_${currentUser}_${modulAktif.id}`);
-                
-                // MENGIRIM KE SUPABASE 
-                simpanNilaiKeDatabase('Nilai Quis', window.aktifQuizSkor);
-                
-                renderHasilQuiz();
+                localStorage.removeItem(`progres_quiz_${currentUser}_${modulAktif.id}`); localStorage.removeItem(`sesi_quiz_${currentUser}_${modulAktif.id}`);
+                simpanNilaiKeDatabase('Nilai Quis', window.aktifQuizSkor); renderHasilQuiz();
             }
         }
-
         function jawabQuizSiswa(pilihan) {
-            let arr = window.aktifQuizData;
+            let arr = window.aktifQuizData; 
             if(pilihan === arr[window.aktifQuizIndex].jawaban) {
                 window.aktifQuizSkor += Math.round(100 / arr.length);
-            }
-            window.aktifQuizIndex++; 
-            if(currentRole === 'siswa' && modulAktif) localStorage.setItem(`progres_quiz_${currentUser}_${modulAktif.id}`, JSON.stringify({ index: window.aktifQuizIndex, skor: window.aktifQuizSkor }));
-            renderSoalQuizSiswa();
-        }
-
-        function tembakConfetti() { 
-            let end = Date.now() + 2000; 
-            (function frame() { 
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } }); // Kiri
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } }); // Kanan
-                if (Date.now() < end) requestAnimationFrame(frame); 
-            }()); 
-        }
-
-        function renderHasilQuiz() {
-            let html = `
-                <div class="text-center py-10">
-                    <div class="w-20 h-20 ${window.aktifQuizSkor >= 70 ? 'bg-purple-100 text-purple-600' : 'bg-red-100 text-red-600'} rounded-full flex items-center justify-center text-4xl mx-auto mb-4">${window.aktifQuizSkor >= 70 ? '🏆' : '⚠️'}</div>
-                    <h3 class="text-3xl font-black text-slate-800 mb-2">Quiz Selesai!</h3>
-                    <div class="text-6xl font-black ${window.aktifQuizSkor >= 70 ? 'text-purple-600' : 'text-red-600'} mb-8">${window.aktifQuizSkor}</div>
-                    <div class="flex gap-4 justify-center flex-wrap">
-                        <button onclick="pindahHalaman('peringkat')" class="bg-amber-500 text-white px-8 py-3 rounded-xl font-bold">Cek Peringkat</button>`;
-            
-            if(window.aktifQuizSkor < 70) {
-                html += `<button onclick="bukaRemedialQuiz()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold shadow hover:bg-slate-700 transition"><i class="fas fa-unlock"></i> Minta PIN Guru</button>`;
-            }
-            html += `</div></div>`;
-            document.getElementById('quiz-game-container').innerHTML = html;
-
-            if(window.aktifQuizSkor >= 70) {
-                playSound('success');
-                tembakConfetti();
+                playSound('success'); // Suara benar!
             } else {
-                playSound('error');
+                playSound('error'); // Suara salah!
             }
+            window.aktifQuizIndex++; if(currentRole === 'siswa' && modulAktif) localStorage.setItem(`progres_quiz_${currentUser}_${modulAktif.id}`, JSON.stringify({ index: window.aktifQuizIndex, skor: window.aktifQuizSkor }));
+            setTimeout(renderSoalQuizSiswa, 300); // Kasih jeda sedikit agar suara kedengaran
         }
-
+        function tembakConfetti() { let end = Date.now() + 2000; (function frame() { confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } }); confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } }); if (Date.now() < end) requestAnimationFrame(frame); }()); }
+        function renderHasilQuiz() {
+            let html = `<div class="text-center py-10"><div class="w-20 h-20 ${window.aktifQuizSkor >= 70 ? 'bg-purple-100 text-purple-600' : 'bg-red-100 text-red-600'} rounded-full flex items-center justify-center text-4xl mx-auto mb-4">${window.aktifQuizSkor >= 70 ? '🏆' : '⚠️'}</div><h3 class="text-3xl font-black text-slate-800 mb-2">Quiz Selesai!</h3><div class="text-6xl font-black ${window.aktifQuizSkor >= 70 ? 'text-purple-600' : 'text-red-600'} mb-8">${window.aktifQuizSkor}</div><div class="flex gap-4 justify-center flex-wrap"><button onclick="pindahHalaman('peringkat')" class="bg-amber-500 text-white px-8 py-3 rounded-xl font-bold">Cek Peringkat</button>`;
+            if(window.aktifQuizSkor < 70) html += `<button onclick="bukaRemedialQuiz()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold shadow hover:bg-slate-700 transition"><i class="fas fa-unlock"></i> Minta PIN Guru</button>`;
+            document.getElementById('quiz-game-container').innerHTML = html + `</div></div>`;
+            if(window.aktifQuizSkor >= 70) { playSound('success'); tembakConfetti(); } else playSound('error');
+        }
         function bukaRemedialQuiz() {
-            let pin = prompt("PERHATIAN: Anda tidak memenuhi standar KKM (70).\nSilakan lapor kepada Guru untuk mendapatkan izin.\n\nMasukkan PIN Rahasia dari Guru:");
-            if(pin === "guru123") {
-                localStorage.removeItem(`skor_quiz_${currentUser}_${modulAktif.id}`);
-                localStorage.removeItem(`progres_quiz_${currentUser}_${modulAktif.id}`);
-                localStorage.removeItem(`sesi_quiz_${currentUser}_${modulAktif.id}`);
-                muatQuizSiswa(modulAktif.id);
-            } else if(pin !== null) { 
-                playSound('error'); alert("Akses Ditolak! PIN dari Guru salah."); 
-            }
+            let pin = prompt("PERHATIAN: Nilai tidak tuntas. Masukkan PIN Guru untuk remedial:");
+            if(pin === "guru123") { localStorage.removeItem(`skor_quiz_${currentUser}_${modulAktif.id}`); localStorage.removeItem(`progres_quiz_${currentUser}_${modulAktif.id}`); localStorage.removeItem(`sesi_quiz_${currentUser}_${modulAktif.id}`); muatQuizSiswa(modulAktif.id); playSound('success'); } 
+            else if(pin !== null) { playSound('error'); alert("PIN Salah."); }
         }
 
         function muatEvaluasiSiswa(idM) {
-            let container = document.getElementById('konten-evaluasi-siswa');
-            let dataJson = localStorage.getItem('eval_campuran_' + idM);
+            let container = document.getElementById('konten-evaluasi-siswa'), dataJson = window.appData['eval_campuran_' + idM]; // Ambil dari server
             if(dataJson) { window.aktifEvalData = JSON.parse(dataJson); renderUjianEvaluasiSiswa(); }
             else container.innerHTML = '<div class="text-center text-slate-400 py-12">Evaluasi belum tersedia.</div>';
         }
-
         function renderUjianEvaluasiSiswa() {
-            let selesaiSkor = localStorage.getItem(`skor_eval_${currentUser}_${modulAktif.id}`);
-            if(selesaiSkor !== null) { renderHasilEvaluasiSiswa(parseInt(selesaiSkor)); return; }
+            let selesaiSkor = localStorage.getItem(`skor_eval_${currentUser}_${modulAktif.id}`); if(selesaiSkor !== null) { renderHasilEvaluasiSiswa(parseInt(selesaiSkor)); return; }
             let html = `<div class="space-y-6">`;
             window.aktifEvalData.forEach((soal, i) => {
                 html += `<div class="bg-white border-2 border-slate-100 p-6 rounded-2xl shadow-sm"><h4 class="font-bold text-slate-800 text-lg mb-4">${i+1}. ${soal.tanya}</h4>`;
-                if(soal.tipe === 'pg') {
-                    soal.opsi.forEach((o, j) => { html += `<label class="flex items-center gap-3 p-4 bg-slate-50 border rounded-xl cursor-pointer mb-2"><input type="radio" name="eval_${i}" value="${j}"><span class="font-medium">${o}</span></label>`; });
-                } else {
-                    html += `<textarea id="eval_${i}" rows="4" class="w-full border rounded-xl p-4 bg-slate-50 font-medium" placeholder="Tulis jawaban esai Anda secara lengkap di sini..."></textarea>`;
-                }
+                if(soal.tipe === 'pg') soal.opsi.forEach((o, j) => { html += `<label class="flex items-center gap-3 p-4 bg-slate-50 border rounded-xl cursor-pointer mb-2 hover:bg-orange-50 transition"><input type="radio" name="eval_${i}" value="${j}" onclick="playSound('click')"><span class="font-medium">${o}</span></label>`; });
+                else html += `<textarea id="eval_${i}" rows="4" class="w-full border rounded-xl p-4 bg-slate-50 font-medium focus:border-orange-500 focus:outline-none" placeholder="Tulis jawaban esai Anda..."></textarea>`;
                 html += `</div>`;
             });
-            document.getElementById('konten-evaluasi-siswa').innerHTML = html + `<button onclick="kumpulkanEvaluasi()" class="w-full bg-orange-500 text-white py-4 rounded-xl font-bold text-xl mt-6 shadow-lg hover:bg-orange-600 transition">Kumpulkan Ujian</button></div>`;
-            triggerMathJaxRender();
+            document.getElementById('konten-evaluasi-siswa').innerHTML = html + `<button onclick="kumpulkanEvaluasi()" class="w-full bg-orange-500 text-white py-4 rounded-xl font-bold text-xl mt-6 shadow-lg hover:bg-orange-600 transition">Kumpulkan Ujian</button></div>`; triggerMathJaxRender();
         }
-
         function kumpulkanEvaluasi() {
-            let total = window.aktifEvalData.length;
-            let benar = 0;
-            if(total === 0) return;
-
+            let total = window.aktifEvalData.length, benar = 0; if(total === 0) return;
             window.aktifEvalData.forEach((soal, i) => {
-                if(soal.tipe === 'pg') {
-                    let ans = document.querySelector(`input[name="eval_${i}"]:checked`);
-                    if(ans && parseInt(ans.value) === parseInt(soal.jawaban)) benar++;
-                } else {
-                    let ans = document.getElementById(`eval_${i}`);
-                    if(ans && ans.value.trim() !== "") benar++;
-                }
+                if(soal.tipe === 'pg') { let ans = document.querySelector(`input[name="eval_${i}"]:checked`); if(ans && parseInt(ans.value) === parseInt(soal.jawaban)) benar++; } 
+                else { let ans = document.getElementById(`eval_${i}`); if(ans && ans.value.trim() !== "") benar++; }
             });
             let skor = Math.round((benar / total) * 100);
-            
-            localStorage.setItem(`skor_eval_${currentUser}_${modulAktif.id}`, skor);
-            tambahSkorKeLeaderboard(skor);
-            
-            // MENGIRIM KE SUPABASE
-            simpanNilaiKeDatabase('Nilai Evaluasi', skor);
-            
-            renderHasilEvaluasiSiswa(skor);
+            localStorage.setItem(`skor_eval_${currentUser}_${modulAktif.id}`, skor); tambahSkorKeLeaderboard(skor);
+            simpanNilaiKeDatabase('Nilai Evaluasi', skor); renderHasilEvaluasiSiswa(skor);
         }
-
         function renderHasilEvaluasiSiswa(skor) {
-            let html = `
-                <div class="text-center py-12">
-                    <h3 class="text-4xl font-black mb-2">Ujian Selesai!</h3>
-                    <div class="text-8xl font-black ${skor >= 70 ? 'text-blue-600' : 'text-red-600'} mb-6">${skor}</div>
-                    <button onclick="tampilkanSertifikat(${skor})" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black text-xl shadow-xl mb-4 transition hover:bg-blue-700 active:scale-95">Lihat Sertifikat</button><br>`;
-            
-            if(skor < 70) {
-                html += `<div class="bg-red-50 text-red-600 border border-red-200 p-4 rounded-xl mt-4 mb-6 max-w-md mx-auto">
-                            <i class="fas fa-exclamation-triangle text-2xl mb-2"></i><br>
-                            <b>Nilai Anda di bawah KKM (70).</b><br>Sertifikat Anda berpredikat KURANG. Anda wajib meminta izin kepada Guru untuk remedial.
-                         </div>
-                         <button onclick="bukaRemedialEval()" class="bg-slate-800 text-white px-6 py-3 rounded-xl font-bold shadow hover:bg-slate-700 transition active:scale-95"><i class="fas fa-unlock"></i> Minta PIN Remedial Guru</button>`;
-            }
-            
+            let html = `<div class="text-center py-12"><h3 class="text-4xl font-black mb-2">Ujian Selesai!</h3><div class="text-8xl font-black ${skor >= 70 ? 'text-blue-600' : 'text-red-600'} mb-6">${skor}</div><button onclick="tampilkanSertifikat(${skor})" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black text-xl shadow-xl mb-4 transition hover:bg-blue-700 active:scale-95">Lihat Sertifikat</button><br>`;
+            if(skor < 70) html += `<div class="bg-red-50 text-red-600 border border-red-200 p-4 rounded-xl mt-4 mb-6 max-w-md mx-auto"><i class="fas fa-exclamation-triangle text-2xl mb-2"></i><br><b>Nilai Anda di bawah KKM (70).</b></div><button onclick="bukaRemedialEval()" class="bg-slate-800 text-white px-6 py-3 rounded-xl font-bold shadow hover:bg-slate-700 transition active:scale-95"><i class="fas fa-unlock"></i> Minta PIN Remedial</button>`;
             document.getElementById('konten-evaluasi-siswa').innerHTML = html + `</div>`;
-
-            if(skor >= 70) {
-                playSound('success');
-                tembakConfetti();
-            } else {
-                playSound('error');
-            }
+            if(skor >= 70) { playSound('success'); tembakConfetti(); } else playSound('error');
         }
-
-        function bukaRemedialEval() {
-            let pin = prompt("PERHATIAN: Anda tidak memenuhi standar KKM (70).\nSilakan lapor kepada Guru untuk mendapatkan izin.\n\nMasukkan PIN Rahasia dari Guru:");
-            if(pin === "guru123") {
-                localStorage.removeItem(`skor_eval_${currentUser}_${modulAktif.id}`);
-                muatEvaluasiSiswa(modulAktif.id);
-            } else if(pin !== null) { 
-                playSound('error'); alert("Akses Ditolak! PIN dari Guru salah."); 
-            }
-        }
+        function bukaRemedialEval() { let pin = prompt("Masukkan PIN Rahasia dari Guru:"); if(pin === "guru123") { localStorage.removeItem(`skor_eval_${currentUser}_${modulAktif.id}`); muatEvaluasiSiswa(modulAktif.id); playSound('success'); } else if(pin !== null) { playSound('error'); alert("Akses Ditolak!"); } }
 
         function tampilkanSertifikat(skor) {
-            let predikat = "";
-            let warnaPredikat = "";
-
-            if (skor < 70) { predikat = "KURANG"; warnaPredikat = "text-red-600"; }
-            else if (skor <= 79) { predikat = "CUKUP"; warnaPredikat = "text-amber-600"; }
-            else if (skor <= 89) { predikat = "BAIK"; warnaPredikat = "text-blue-600"; }
-            else { predikat = "SANGAT BAIK"; warnaPredikat = "text-green-600"; }
-
-            document.getElementById('nama-di-sertifikat').innerText = currentUser;
-            document.getElementById('skor-di-sertifikat').innerText = skor;
-            
-            let elPredikat = document.getElementById('predikat-di-sertifikat');
-            elPredikat.innerText = predikat;
-            elPredikat.className = `text-xl font-bold ml-2 ${warnaPredikat}`;
-
+            let predikat = "", warnaPredikat = "";
+            if (skor < 70) { predikat = "KURANG"; warnaPredikat = "text-red-600"; } else if (skor <= 79) { predikat = "CUKUP"; warnaPredikat = "text-amber-600"; } else if (skor <= 89) { predikat = "BAIK"; warnaPredikat = "text-blue-600"; } else { predikat = "SANGAT BAIK"; warnaPredikat = "text-green-600"; }
+            document.getElementById('nama-di-sertifikat').innerText = currentUser; document.getElementById('skor-di-sertifikat').innerText = skor;
+            let elPredikat = document.getElementById('predikat-di-sertifikat'); elPredikat.innerText = predikat; elPredikat.className = `text-xl font-bold ml-2 ${warnaPredikat}`;
             document.getElementById('modul-di-sertifikat').innerText = modulAktif ? modulAktif.judul : "Materi";
-            
-            let modal = document.getElementById('modal-sertifikat');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            
-            if(skor >= 70) {
-                playSound('success');
-                tembakConfetti();
-            } else {
-                playSound('error');
-            }
+            document.getElementById('modal-sertifikat').classList.remove('hidden'); document.getElementById('modal-sertifikat').classList.add('flex');
+            if(skor >= 70) { playSound('success'); tembakConfetti(); } else playSound('error');
         }
-        function tutupSertifikat() { document.getElementById('modal-sertifikat').classList.add('hidden'); }
+        function tutupSertifikat() { playSound('pop'); document.getElementById('modal-sertifikat').classList.add('hidden'); }
 
         let targetEditorMatematika = "";
-        function bukaModalRumus(idTarget) { targetEditorMatematika = idTarget; document.getElementById('modal-rumus').classList.remove('hidden'); }
-        function tutupModalRumus() { document.getElementById('modal-rumus').classList.add('hidden'); }
-        function sisipkanRumusKeEditor() {
-            let mf = document.getElementById('math-field-input');
-            if(mf.value.trim() !== "") { document.getElementById(targetEditorMatematika).focus(); document.execCommand('insertText', false, " \\(" + mf.value + "\\) "); }
-            tutupModalRumus();
-        }
+        function bukaModalRumus(idTarget) { targetEditorMatematika = idTarget; document.getElementById('modal-rumus').classList.remove('hidden'); playSound('pop'); }
+        function tutupModalRumus() { document.getElementById('modal-rumus').classList.add('hidden'); playSound('pop'); }
+        function sisipkanRumusKeEditor() { let mf = document.getElementById('math-field-input'); if(mf.value.trim() !== "") { document.getElementById(targetEditorMatematika).focus(); document.execCommand('insertText', false, " \\(" + mf.value + "\\) "); } tutupModalRumus(); playSound('success'); }
 
-        function prosesUploadWord(event, targetEditorId) {
-            let file = event.target.files[0]; if(!file) return;
-            let reader = new FileReader(); reader.onload = function(e) {
-                mammoth.convertToHtml({arrayBuffer: e.target.result}).then(res => {
-                    document.getElementById(targetEditorId).innerHTML = res.value;
-                    alert("Berhasil import Word!");
-                    triggerMathJaxRender();
-                }).catch(err => console.log(err));
-            }; reader.readAsArrayBuffer(file);
-        }
-
-        function prosesUploadWordSiswa(event) {
-            let file = event.target.files[0]; if(!file) return;
-            let reader = new FileReader(); reader.onload = function(e) {
-                mammoth.convertToHtml({arrayBuffer: e.target.result}).then(res => {
-                    document.getElementById('jawaban-lkpd-siswa').innerHTML = res.value;
-                    simpanOtomatisLKPD();
-                    triggerMathJaxRender();
-                });
-            }; reader.readAsArrayBuffer(file);
+        // FUNGSI UPLOAD WORD GLOBAL UNTUK SEMUA EDITOR (GURU DAN SISWA)
+        function prosesUploadWordGlobal(event, targetEditorId) {
+            let file = event.target.files[0]; 
+            if(!file) return; 
+            let reader = new FileReader(); 
+            reader.onload = function(e) { 
+                mammoth.convertToHtml({arrayBuffer: e.target.result}).then(res => { 
+                    document.getElementById(targetEditorId).innerHTML = res.value; 
+                    if (targetEditorId === 'jawaban-lkpd-siswa') simpanOtomatisLKPD();
+                    triggerMathJaxRender(); 
+                    playSound('success');
+                }).catch(err => {
+                    console.error("Gagal convert Word:", err);
+                    playSound('error');
+                    alert("Gagal membaca file Word!");
+                }); 
+            }; 
+            reader.readAsArrayBuffer(file);
         }
 
         function populateDropdownAdmin() {
@@ -1642,71 +1325,84 @@
         
         function bukaTabAdmin(idTab, elemenBtn) {
             document.querySelectorAll('.tab-admin').forEach(t => t.classList.remove('aktif')); document.getElementById(idTab).classList.add('aktif');
-            document.querySelectorAll('.tab-btn-admin').forEach(b => b.className = "tab-btn-admin flex-1 py-3 px-2 font-semibold text-slate-500");
-            elemenBtn.className = "tab-btn-admin flex-1 py-3 px-2 font-bold bg-white rounded-lg shadow-sm text-indigo-600";
+            document.querySelectorAll('.tab-btn-admin').forEach(b => b.className = "tab-btn-admin flex-1 py-3 px-2 font-semibold text-slate-500 hover:text-indigo-600 transition text-xs sm:text-sm");
+            elemenBtn.className = "tab-btn-admin flex-1 py-3 px-2 font-bold bg-white rounded-lg shadow-sm text-indigo-600 text-xs sm:text-sm";
             if(idTab === 'tab-admin-cek-lkpd') muatDaftarLKPDSiswaAdmin();
         }
         
-        function formatTeks(idEditor, command) { document.execCommand(command, false, null); }
-        function formatTeksArg(idEditor, command, arg) { document.execCommand(command, false, arg); }
+        function formatTeks(idEditor, command) { playSound('click'); document.execCommand(command, false, null); document.getElementById(idEditor).focus(); }
+        function formatTeksArg(idEditor, command, arg) { playSound('click'); document.execCommand(command, false, arg); document.getElementById(idEditor).focus(); }
         
         function muatDataKeEditorAdmin() {
             let idM = document.getElementById('pilih-materi-admin').value; if(!idM) return;
-            document.getElementById('editor-atp').innerHTML = localStorage.getItem('atp_' + idM) || "";
-            document.getElementById('editor-teori').innerHTML = localStorage.getItem('teori_' + idM) || "";
-            document.getElementById('editor-lkpd').innerHTML = localStorage.getItem('lkpd_' + idM) || "";
-            document.getElementById('input-admin-quiz').value = localStorage.getItem('quiz_' + idM) || "";
-            document.getElementById('input-admin-eval').value = localStorage.getItem('eval_campuran_' + idM) || "";
-            muatDaftarLKPDSiswaAdmin();
-            triggerMathJaxRender();
+            document.getElementById('editor-atp').innerHTML = window.appData['atp_' + idM] || "";
+            document.getElementById('editor-teori').innerHTML = window.appData['teori_' + idM] || "";
+            document.getElementById('editor-lkpd').innerHTML = window.appData['lkpd_' + idM] || "";
+            document.getElementById('input-admin-quiz').value = window.appData['quiz_' + idM] || "";
+            document.getElementById('input-admin-eval').value = window.appData['eval_campuran_' + idM] || "";
+            muatDaftarLKPDSiswaAdmin(); triggerMathJaxRender();
         }
 
-        function muatDaftarLKPDSiswaAdmin() {
-            let idM = document.getElementById('pilih-materi-admin').value;
+        // MENARIK JAWABAN LKPD LANGSUNG DARI SUPABASE (Bukan local lagi)
+        async function muatDaftarLKPDSiswaAdmin() {
             let sel = document.getElementById('pilih-siswa-lkpd');
-            sel.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>';
-            if(!idM) return;
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if(key.startsWith('jawaban_lkpd_') && key.endsWith('_' + idM)) {
-                    let namaSiswa = key.replace('jawaban_lkpd_', '').replace('_' + idM, '');
-                    sel.innerHTML += `<option value="${key}">${namaSiswa}</option>`;
+            sel.innerHTML = '<option value="">-- Menghubungkan ke Database... --</option>';
+            try {
+                const { data, error } = await supabaseDb.from('nilai siswa').select('nama siswa, Nilai LKPD');
+                sel.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>';
+                if(data) {
+                    let adaLkpd = data.filter(d => d['Nilai LKPD']);
+                    adaLkpd.forEach(d => {
+                        window.tempLkpdAdmin[d['nama siswa']] = d['Nilai LKPD'];
+                        sel.innerHTML += `<option value="${d['nama siswa']}">${d['nama siswa']}</option>`;
+                    });
                 }
-            }
+            } catch(e) { sel.innerHTML = '<option value="">Gagal Memuat dari Server</option>'; }
         }
 
         function lihatLKPDSiswaAdmin() {
-            let key = document.getElementById('pilih-siswa-lkpd').value;
+            let nama = document.getElementById('pilih-siswa-lkpd').value;
             let divHasil = document.getElementById('hasil-lkpd-lokal-admin');
-            if(!key) { divHasil.classList.add('hidden'); return; }
-            divHasil.innerHTML = localStorage.getItem(key) || '<i>Kosong</i>';
-            divHasil.classList.remove('hidden');
-            triggerMathJaxRender();
+            if(!nama) { divHasil.classList.add('hidden'); return; }
+            divHasil.innerHTML = window.tempLkpdAdmin[nama] || '<i>Kosong</i>';
+            divHasil.classList.remove('hidden'); triggerMathJaxRender();
         }
 
-        function simpanATPAdmin() { let idM = document.getElementById('pilih-materi-admin').value; localStorage.setItem('atp_'+idM, document.getElementById('editor-atp').innerHTML); alert("ATP Disimpan."); }
-        function simpanTeoriAdmin() { let idM = document.getElementById('pilih-materi-admin').value; localStorage.setItem('teori_'+idM, document.getElementById('editor-teori').innerHTML); alert("Teori Disimpan."); }
-        function simpanLKPDAdmin() { let idM = document.getElementById('pilih-materi-admin').value; localStorage.setItem('lkpd_'+idM, document.getElementById('editor-lkpd').innerHTML); alert("LKPD Disimpan."); }
-        function simpanQuizAdmin() { let idM = document.getElementById('pilih-materi-admin').value; localStorage.setItem('quiz_'+idM, document.getElementById('input-admin-quiz').value); alert("Quiz Disimpan."); }
-        function simpanEvalAdmin() { let idM = document.getElementById('pilih-materi-admin').value; localStorage.setItem('eval_campuran_'+idM, document.getElementById('input-admin-eval').value); alert("Evaluasi Disimpan."); }
+        // FUNGSI SIMPAN KE SERVER UNTUK ADMIN
+        async function simpanATPAdmin(e) { 
+            let idM = document.getElementById('pilih-materi-admin').value; if(!idM){ playSound('error'); alert("Pilih Modul Dulu!");return;}
+            let btn = e.currentTarget; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            await simpanKontenGlobal('atp_'+idM, document.getElementById('editor-atp').innerHTML); 
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Server'; playSound('success'); alert("ATP Disimpan ke Database Server!"); 
+        }
+        async function simpanTeoriAdmin(e) { 
+            let idM = document.getElementById('pilih-materi-admin').value; if(!idM){ playSound('error'); alert("Pilih Modul Dulu!");return;}
+            let btn = e.currentTarget; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            await simpanKontenGlobal('teori_'+idM, document.getElementById('editor-teori').innerHTML); 
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Server'; playSound('success'); alert("Teori Disimpan ke Database Server!"); 
+        }
+        async function simpanLKPDAdmin(e) { 
+            let idM = document.getElementById('pilih-materi-admin').value; if(!idM){ playSound('error'); alert("Pilih Modul Dulu!");return;}
+            let btn = e.currentTarget; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            await simpanKontenGlobal('lkpd_'+idM, document.getElementById('editor-lkpd').innerHTML); 
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Server'; playSound('success'); alert("LKPD Disimpan ke Database Server!"); 
+        }
+        async function simpanQuizAdmin(e) { 
+            let idM = document.getElementById('pilih-materi-admin').value; if(!idM){ playSound('error'); alert("Pilih Modul Dulu!");return;}
+            let btn = e.currentTarget; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            await simpanKontenGlobal('quiz_'+idM, document.getElementById('input-admin-quiz').value); 
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Server'; playSound('success'); alert("Quiz Disimpan ke Database Server!"); 
+        }
+        async function simpanEvalAdmin(e) { 
+            let idM = document.getElementById('pilih-materi-admin').value; if(!idM){ playSound('error'); alert("Pilih Modul Dulu!");return;}
+            let btn = e.currentTarget; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            await simpanKontenGlobal('eval_campuran_'+idM, document.getElementById('input-admin-eval').value); 
+            btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Server'; playSound('success'); alert("Evaluasi Disimpan ke Database Server!"); 
+        }
 
-        function eksporNilaiCSV() {
-            let csv = "Nama,Skor\n" + leaderboardDB.map(s => `${s.nama},${s.skor}`).join("\n");
-            let link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); link.download = "Rekap_Nilai_MathLearn.csv"; link.click();
-        }
-        function eksporDatabase() {
-            let backup = {}; for (let i = 0; i < localStorage.length; i++) { let k = localStorage.key(i); backup[k] = localStorage.getItem(k); }
-            let link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], {type: "application/json"})); link.download = "Backup_AkselerasiPrivat.json"; link.click();
-        }
-        function prosesImporDatabase(e) {
-            let file = e.target.files[0]; if(!file) return;
-            let reader = new FileReader(); reader.onload = function(evt) {
-                let data = JSON.parse(evt.target.result);
-                Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
-                alert("Data berhasil dipulihkan!");
-                location.reload();
-            }; reader.readAsText(file);
-        }
+        function eksporNilaiCSV() { let csv = "Nama,Skor\n" + leaderboardDB.map(s => `${s.nama},${s.skor}`).join("\n"); let link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); link.download = "Rekap_Nilai_MathLearn.csv"; link.click(); }
+        function eksporDatabase() { let backup = {}; for (let i = 0; i < localStorage.length; i++) { let k = localStorage.key(i); backup[k] = localStorage.getItem(k); } let link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], {type: "application/json"})); link.download = "Backup_Lokal_AkselerasiPrivat.json"; link.click(); }
+        function prosesImporDatabase(e) { let file = e.target.files[0]; if(!file) return; let reader = new FileReader(); reader.onload = function(evt) { let data = JSON.parse(evt.target.result); Object.keys(data).forEach(k => localStorage.setItem(k, data[k])); alert("Data berhasil dipulihkan!"); location.reload(); }; reader.readAsText(file); }
         function tampilkanPesan(j, d, bi, wt, bt, e) { alert(j + ": " + d); }
         function tutupAlert() {}
     </script>
